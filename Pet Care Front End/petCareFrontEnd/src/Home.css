@@ -22,10 +22,27 @@ body {
     background-image: url(src/assets/hero3.png);
     background-size: contain;
     background-position: center;
-    padding: 3em 10em;
+    padding: 3.7rem 8rem;
     background-color: #def4e7; /* Light green */
   }
   
+  .hero-text {
+    background-color: #204e2a;
+    padding: 2rem;
+    border-radius: 3rem;
+    opacity: 85%;
+  }
+
+  .white-text {
+    color: white;
+  }
+
+  .buttons-center{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
+  }
   .hero-text h1 {
     font-size: 3rem;
     color: #4caf50; /* Green for the main headline */
@@ -39,14 +56,15 @@ body {
   }
   
   .btn-primary {
-    background-color: #4caf50;
+    background-color: #66BF7B;
+    border: 2px solid #2b6a3a;
     color: white;
   }
   
   .btn-secondary {
     background-color: white;
-    border: 2px solid #4caf50;
-    color: #4caf50;
+    border: 2px solid #66BF7B;
+    color: #2b6a3a;
   }
   
   .hero-image {
@@ -73,30 +91,54 @@ body {
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
-  
-  /* Welcome Section */
-  .welcome-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #e0f7fa; /* Light blue */
+
+  .feature img {
+    max-width: 17.6rem;
   }
   
-  .welcome-section .pet-images {
+  /* Welcome Section */
+  .features-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #ededed; 
+  }
+  
+  .features-section .pet-images {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
   }
   
-  .welcome-section .pet-images img {
+  .features-section .pet-images img {
     width: 150px;
     border-radius: 10px;
   }
   
-  .btn-read-more {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+ .tutorial-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 5rem;
+    background-color: #C3E5CC;
+ }
+
+ .video {
+    margin-left: 1rem;
+ }
+
+ .video img {
+    max-height: 25rem;
+ }
+
+ h2 {
+    font-size: 2.3rem;
+    margin-top: 0;
+    color: #204e2a;
+ }
+
+ .tutorial-text {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 4rem 1rem;
+ }
