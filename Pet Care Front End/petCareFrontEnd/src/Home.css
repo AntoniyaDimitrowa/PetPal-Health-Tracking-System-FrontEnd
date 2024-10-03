@@ -1,0 +1,102 @@
+/* Home.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  h1, h2, h3 {
+    color: #333;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background-repeat: no-repeat;
+    background-image: url(src/assets/hero3.png);
+    background-size: contain;
+    background-position: center;
+    padding: 3em 10em;
+    background-color: #def4e7; /* Light green */
+  }
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    color: #4caf50; /* Green for the main headline */
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: white;
+    border: 2px solid #4caf50;
+    color: #4caf50;
+  }
+  
+  .hero-image {
+    width: 40%;
+    border-radius: 15px;
+  }
+  
+  /* Why Choose Us Section */
+  .why-choose-us {
+    padding: 50px;
+    background-color: #f4f4f4;
+    text-align: center;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .feature {
+    width: 20%;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Welcome Section */
+  .welcome-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #e0f7fa; /* Light blue */
+  }
+  
+  .welcome-section .pet-images {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .welcome-section .pet-images img {
+    width: 150px;
+    border-radius: 10px;
+  }
+  
+  .btn-read-more {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
