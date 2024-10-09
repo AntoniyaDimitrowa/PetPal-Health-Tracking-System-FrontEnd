@@ -18,7 +18,7 @@ function Header() {
       </nav>
       <div className={styles.authButtons}>
         <Link to="/login"><button className={styles.btnSecondary}>Log In</button></Link>
-        <button className={styles.btnPrimary}>Sign Up</button>
+        <Link to="/signup"><button className={styles.btnPrimary}>Sign Up</button></Link>
       </div>
     </header>
   );

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Login() {
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.loginBox}>
+      <div className={styles.box}>
         <h1 className={styles.title}>Login</h1>
         <form>
           <div className={styles.inputGroup}>

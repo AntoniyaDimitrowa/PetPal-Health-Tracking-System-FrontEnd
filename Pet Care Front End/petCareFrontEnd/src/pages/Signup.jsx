@@ -3,10 +3,10 @@ import styles from "./Form.module.css";
 import typogrphy from "./Typography.module.css"; 
 import { Link } from "react-router-dom";
 
-function Login() {
+function Signup() {
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.loginBox}>
+      <div className={styles.box}>
         <h1 className={styles.title}>Signup</h1>
         <form>
           <div className={styles.inputGroup}>
@@ -43,4 +43,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

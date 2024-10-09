@@ -9,7 +9,7 @@
   }
   
 
-  .loginBox {
+  .box {
     background-color: #F7F7F7; 
     padding: 1rem 5rem 2rem 5rem;
     border-radius: 1rem;
@@ -42,7 +42,7 @@
   }
   
 
-  .inputField {
+  .inputField, .dropdown{
     width: 100%;
     padding: 1rem;
     border: 2px solid #D2E9D7; 
