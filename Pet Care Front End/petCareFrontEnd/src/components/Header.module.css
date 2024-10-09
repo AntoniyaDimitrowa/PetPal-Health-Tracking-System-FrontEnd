@@ -23,7 +23,7 @@
   nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 2rem;
   }
   
   nav ul li a {
@@ -31,8 +31,24 @@
     text-decoration: none;
   }
   
-  .auth-buttons .btn-primary,
-  .auth-buttons .btn-secondary {
+  .authButtons .btnPrimary,
+  .authButtons .btnSecondary {
     margin-left: 10px;
+  }
+
+  .btnPrimary {
+    background-color: #66BF7B;
+    /* border: 2px solid #2b6a3a; */
+    color: white;
+  }
+
+  .btnPrimary:hover {
+    background-color: #5aad6d; 
+  }
+  
+  .btnSecondary {
+    background-color: white;
+    border: 2px solid #66BF7B;
+    color: #2b6a3a;
   }
   

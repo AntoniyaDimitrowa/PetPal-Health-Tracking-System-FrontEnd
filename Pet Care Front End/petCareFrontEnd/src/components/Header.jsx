@@ -1,23 +1,24 @@
 import React from "react";
-import "./Header.css"; // Create a separate CSS file for header styling
+import styles from "./Header.module.css"; 
+import { NavLink, Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="header">
-      <div className="logo">
+    <header className={styles.header}>
+      <div className={styles.logo}>
         <img src="/src/assets/logo-with-text.png" alt="Logo" />
       </div>
       <nav>
         <ul>
-          <li><a href="#home">Home</a></li>
+          <li><NavLink to="/">Home</NavLink></li>
           <li><a href="#health-tracking">Health Tracking</a></li>
           <li><a href="#socialize">Socialize</a></li>
           <li><a href="#account">Account</a></li>
         </ul>
       </nav>
-      <div className="auth-buttons">
-        <button className="btn-secondary">Log In</button>
-        <button className="btn-primary">Sign Up</button>
+      <div className={styles.authButtons}>
+        <Link to="/login"><button className={styles.btnSecondary}>Log In</button></Link>
+        <button className={styles.btnPrimary}>Sign Up</button>
       </div>
     </header>
   );
