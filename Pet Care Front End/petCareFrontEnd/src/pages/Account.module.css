@@ -1,0 +1,101 @@
+/* Account.module.css */
+
+/* General Styles */
+.accountContainer {
+    padding: 20px;
+    background-color: #def4e7; /* Light green background */
+  }
+  
+  /* User Profile Section */
+  .userProfile {
+    background-color: #204e2a;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .profileDetails {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .profileAvatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .profileInfo p {
+    margin: 5px 0;
+  }
+  
+  .profilePets h2 {
+    font-size: 1.5rem;
+    color: #4caf50;
+  }
+  
+  .petCount {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+  }
+  
+  .editButton {
+    background-color: white;
+    color: #4caf50;
+    border: 2px solid #4caf50;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Pet List Section */
+  .petList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .petCard {
+    background-color: white;
+    border: 2px solid #4caf50;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+  }
+  
+  .petImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+  }
+  
+  .petDetails p {
+    margin: 5px 0;
+  }
+  
+  .dailyUpdateButton,
+  .vaccinationCheckButton,
+  .addPetButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .addPetButton {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+  
