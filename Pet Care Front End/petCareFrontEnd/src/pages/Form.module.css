@@ -1,0 +1,91 @@
+
+.pageContainer {
+    background-color: #C3E5CC; 
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+  }
+  
+
+  .loginBox {
+    background-color: #F7F7F7; 
+    padding: 1rem 5rem 2rem 5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 40%;
+  }
+  
+  .title {
+    color: #0A8628; 
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Knewave', cursive; 
+  }
+  
+
+  .inputGroup {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: center;
+
+  }
+  
+  .label {
+    display: block;
+    color: #0A8628; 
+    text-align: left;
+  }
+  
+
+  .inputField {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #D2E9D7; 
+    border-radius: 5px;
+    background-color: #D2E9D7; 
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+  }
+  
+
+  .inputField:focus {
+    border-color: #66BF7B; 
+  }
+  
+  
+  .actionButton {
+    background-color: #66BF7B; 
+    color: white;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  
+  .actionButton:hover {
+    background-color: #5aad6d; 
+  }
+  
+
+  .signUpText {
+    color: #0A8628; 
+    font-size: 1rem;
+  }
+  
+  .link {
+    color: #06681f; /* Dark green sign up link */
+    text-decoration: none;
+  }
+  
+  .signUpLink:hover {
+    text-decoration: underline;
+  }
+  
