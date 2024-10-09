@@ -1,0 +1,66 @@
+
+  .title {
+    color: #0A8628;
+    font-family: 'Knewave', cursive;
+  }
+  
+  .imageUpload {
+    margin-bottom: 20px;
+  }
+  
+  .uploadPlaceholder {
+    width: 14rem;
+    height: 13rem;
+    background-color: #D2E9D7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .petImage {
+    width: 14rem;
+    height: 13rem;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .fileInput {
+    display: none;
+  }
+  
+  .vaccinationGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .vaccinationGroup label {
+    color: #0A8628;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .checkboxGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 2rem;
+  }
+  
+  .checkboxGroup label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .photoPlusInputs{
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .pageContainer {
+    padding: 8rem 0;
+  }
+  
