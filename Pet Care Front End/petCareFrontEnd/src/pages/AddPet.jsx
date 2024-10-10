@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AddPet.module.css';
 import formStyles from "./Form.module.css";
 import typogrphy from "./Typography.module.css";
 import { Link } from "react-router-dom";
+import Select from 'react-select';
+import { getBreeds } from "../services/BreedsService";
+import { addPet } from "../services/PetService";
 
 function AddPet() {
     const [petData, setPetData] = useState({
@@ -19,6 +22,57 @@ function AddPet() {
         },
         image: null
     });
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            backgroundColor: '#D2E9D7', 
+            border: '1px solid #D2E9D7', 
+            boxShadow: state.isFocused ? '0 0 0 2px #007bff' : null, 
+            padding: '0.5rem',
+            '&:hover': {
+                border: '1px solid #66BF7B', 
+            },
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? '#007bff' : state.isFocused ? '#E4F3E6' : '#D2E9D7', 
+            color: state.isSelected ? 'white' : 'black', 
+            '&:hover': {
+                backgroundColor: '#D2E9D7', 
+            },
+        }),
+        menu: (provided) => ({
+            ...provided,
+            backgroundColor: '#D2E9D7', 
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: 'black', 
+        }),
+    };
+    
+
+    const [breedOptions, setBreedOptions] = useState([]);
+    const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
+
+    useEffect(() => {
+        const fetchBreeds = async () => {
+            try {
+                const breeds = await getBreeds();
+                const formattedBreeds = breeds.map((breed) => ({
+                    value: breed.name, 
+                    label: breed.name, 
+                }));
+                setBreedOptions(formattedBreeds);
+            } catch (error) {
+                console.error('Error fetching breeds:', error);
+            }
+            setIsLoadingBreeds(false);
+        };
+    
+        fetchBreeds();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -40,10 +94,13 @@ function AddPet() {
         setPetData({ ...petData, image: URL.createObjectURL(file) });
     };
 
+    const handleBreedChange = (selectedOption) => {
+        setPetData({ ...petData, breed: selectedOption ? selectedOption.value : '' });
+    };    
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(petData);
-        // Logic to submit form data
+        addPet(petData);
     };
 
 
@@ -85,15 +142,20 @@ function AddPet() {
                             </div>
                             <div className={formStyles.inputGroup}>
                                 <label htmlFor="breed" className={formStyles.label}>Breed:</label>
-                                <input
-                                    type="text"
+                                <Select
                                     id="breed"
                                     name="breed"
-                                    value={petData.breed}
-                                    onChange={handleChange}
-                                    className={formStyles.inputField}
+                                    options={breedOptions}
+                                    value={breedOptions.find((option) => option.value === petData.breed)}
+                                    onChange={handleBreedChange}
+                                    isClearable
+                                    isLoading={isLoadingBreeds}
+                                    placeholder="Select or type a breed..."
+                                    className={formStyles.selectField}
+                                    styles={customStyles}
                                 />
                             </div>
+
                             <div className={formStyles.inputGroup}>
                                 <label className={formStyles.label} htmlFor="birthdate">Birthdate:</label>
                                 <input
@@ -112,9 +174,11 @@ function AddPet() {
 
 
                     <div className={formStyles.inputGroup}>
-                        <label className={formStyles.label} htmlFor="weight">Weight:</label>
+                        <label className={formStyles.label} htmlFor="weight">Weight(kg):</label>
                         <input
-                            type="text"
+                            type="number"
+                            min={0.05}
+                            step={0.01}
                             id="weight"
                             name="weight"
                             value={petData.weight}
@@ -181,7 +245,7 @@ function AddPet() {
                             </label>
                         </div>
                     </div>
-                    <button type="submit" className={formStyles.actionButton}>Save</button>
+                    <button type="submit" onClick={handleSubmit} className={formStyles.actionButton}>Save</button>
                 </form>
             </div>
         </div>

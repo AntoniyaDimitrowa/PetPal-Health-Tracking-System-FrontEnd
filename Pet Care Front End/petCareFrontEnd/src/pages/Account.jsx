@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getAccount } from "../services/UserAccountService";
+import { getPets } from "../services/PetService";
 import styles from "./Account.module.css";
 
 
