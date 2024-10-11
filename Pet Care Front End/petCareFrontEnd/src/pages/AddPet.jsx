@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Select from 'react-select';
 import { getBreeds } from "../services/BreedsService";
 import { addPet } from "../services/PetService";
+import { getVaccinationsForPuppy } from "../services/VaccinationsService";
 
 function AddPet() {
     const [petData, setPetData] = useState({
@@ -23,35 +24,60 @@ function AddPet() {
         image: null
     });
 
+    const [vaccinationOptions, setVaccinationOptions] = useState([]);
+
+    useEffect(() => {
+        const fetchVaccinations = async () => {
+            try {
+                const vaccinations = await getVaccinationsForPuppy();
+                setVaccinationOptions(vaccinations);
+
+                const defaultVaccinations = {};
+                vaccinations.forEach(vaccine => {
+                    defaultVaccinations[vaccine.name.toLowerCase()] = false;
+                });
+
+                setPetData(prevData => ({
+                    ...prevData,
+                    vaccinations: defaultVaccinations
+                }));
+            } catch (error) {
+                console.error("Error fetching vaccinations:", error);
+            }
+        };
+
+        fetchVaccinations();
+    }, []);
+
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-            backgroundColor: '#D2E9D7', 
-            border: '1px solid #D2E9D7', 
-            boxShadow: state.isFocused ? '0 0 0 2px #007bff' : null, 
+            backgroundColor: '#D2E9D7',
+            border: '1px solid #D2E9D7',
+            boxShadow: state.isFocused ? '0 0 0 2px #007bff' : null,
             padding: '0.5rem',
             '&:hover': {
-                border: '1px solid #66BF7B', 
+                border: '1px solid #66BF7B',
             },
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isSelected ? '#007bff' : state.isFocused ? '#E4F3E6' : '#D2E9D7', 
-            color: state.isSelected ? 'white' : 'black', 
+            backgroundColor: state.isSelected ? '#007bff' : state.isFocused ? '#E4F3E6' : '#D2E9D7',
+            color: state.isSelected ? 'white' : 'black',
             '&:hover': {
-                backgroundColor: '#D2E9D7', 
+                backgroundColor: '#D2E9D7',
             },
         }),
         menu: (provided) => ({
             ...provided,
-            backgroundColor: '#D2E9D7', 
+            backgroundColor: '#D2E9D7',
         }),
         singleValue: (provided) => ({
             ...provided,
-            color: 'black', 
+            color: 'black',
         }),
     };
-    
+
 
     const [breedOptions, setBreedOptions] = useState([]);
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
@@ -61,8 +87,8 @@ function AddPet() {
             try {
                 const breeds = await getBreeds();
                 const formattedBreeds = breeds.map((breed) => ({
-                    value: breed.name, 
-                    label: breed.name, 
+                    value: breed.name,
+                    label: breed.name,
                 }));
                 setBreedOptions(formattedBreeds);
             } catch (error) {
@@ -70,7 +96,7 @@ function AddPet() {
             }
             setIsLoadingBreeds(false);
         };
-    
+
         fetchBreeds();
     }, []);
 
@@ -96,7 +122,7 @@ function AddPet() {
 
     const handleBreedChange = (selectedOption) => {
         setPetData({ ...petData, breed: selectedOption ? selectedOption.value : '' });
-    };    
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -207,42 +233,17 @@ function AddPet() {
                     <div className={styles.vaccinationGroup}>
                         <label className={formStyles.label}>Vaccinations:</label>
                         <div className={styles.checkboxGroup}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="distemper"
-                                    checked={petData.vaccinations.distemper}
-                                    onChange={handleChange}
-                                />
-                                Distemper (6-8 weeks)
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="parvovirus"
-                                    checked={petData.vaccinations.parvovirus}
-                                    onChange={handleChange}
-                                />
-                                Parvovirus (6-8 weeks)
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="adenovirus"
-                                    checked={petData.vaccinations.adenovirus}
-                                    onChange={handleChange}
-                                />
-                                Adenovirus (10-12 weeks)
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="rabies"
-                                    checked={petData.vaccinations.rabies}
-                                    onChange={handleChange}
-                                />
-                                Rabies (12-16 weeks)
-                            </label>
+                            {vaccinationOptions.map((vaccine, index) => (
+                                <label key={vaccine.id || index}> 
+                                    <input
+                                        type="checkbox"
+                                        name={vaccine.name.toLowerCase()} 
+                                        checked={petData.vaccinations[vaccine.name.toLowerCase()]}
+                                        onChange={handleChange}
+                                    />
+                                    {vaccine.name} ({vaccine.range} weeks)
+                                </label>
+                            ))}
                         </div>
                     </div>
                     <button type="submit" onClick={handleSubmit} className={formStyles.actionButton}>Save</button>
