@@ -4,7 +4,6 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
 import Breeds from './pages/Breeds.jsx';
-import Pets from './pages/Pets.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Account from './pages/Account.jsx';
@@ -18,7 +17,6 @@ function App() {
       <Routes>
         <Route path='/' element={<Home></Home>}/>
         <Route path='/breeds' element={<Breeds></Breeds>}/>
-        <Route path='/pets' element={<Pets></Pets>}/>
         <Route path='/login' element={<Login></Login>}/>
         <Route path='/signup' element={<Signup></Signup>}/>
         <Route path='/addPet' element={<AddPet></AddPet>}/>

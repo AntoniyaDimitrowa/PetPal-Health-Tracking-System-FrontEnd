@@ -11,16 +11,11 @@ import { getVaccinationsForPuppy } from "../services/VaccinationsService";
 function AddPet() {
     const [petData, setPetData] = useState({
         name: '',
-        breed: '',
+        breedId: '',
         birthdate: '',
         weight: '',
         gender: '',
-        vaccinations: {
-            distemper: false,
-            parvovirus: false,
-            adenovirus: false,
-            rabies: false
-        },
+        vaccinations: {},
         image: null
     });
 
@@ -34,7 +29,7 @@ function AddPet() {
 
                 const defaultVaccinations = {};
                 vaccinations.forEach(vaccine => {
-                    defaultVaccinations[vaccine.name.toLowerCase()] = false;
+                    defaultVaccinations[vaccine.id] = false;
                 });
 
                 setPetData(prevData => ({
@@ -87,7 +82,7 @@ function AddPet() {
             try {
                 const breeds = await getBreeds();
                 const formattedBreeds = breeds.map((breed) => ({
-                    value: breed.name,
+                    value: breed.id,
                     label: breed.name,
                 }));
                 setBreedOptions(formattedBreeds);
@@ -96,6 +91,7 @@ function AddPet() {
             }
             setIsLoadingBreeds(false);
         };
+
 
         fetchBreeds();
     }, []);
@@ -113,21 +109,47 @@ function AddPet() {
         } else {
             setPetData({ ...petData, [name]: value });
         }
+        console.log(petData);
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setPetData({ ...petData, image: URL.createObjectURL(file) });
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPetData({ ...petData, image: reader.result });
+        };
     };
 
     const handleBreedChange = (selectedOption) => {
-        setPetData({ ...petData, breed: selectedOption ? selectedOption.value : '' });
+        const breedId = selectedOption ? selectedOption.value : '';
+        setPetData({ ...petData, breedId });
+        console.log(petData);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addPet(petData);
+
+        try {
+            await addPet(petData);
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code outside of the 2xx range
+                console.error('Error Response:', error.response.data);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('Error Request:', error.request);
+            } else {
+                // Something happened in setting up the request that triggered the error
+                console.error('Error Message:', error.message);
+            }
+        }
     };
+
+    // const handleSubmit = () => {
+    //     console.log(petData);
+    // };
+
 
 
     return (
@@ -172,7 +194,7 @@ function AddPet() {
                                     id="breed"
                                     name="breed"
                                     options={breedOptions}
-                                    value={breedOptions.find((option) => option.value === petData.breed)}
+                                    value={breedOptions.find((option) => option.value === petData.breedId)}
                                     onChange={handleBreedChange}
                                     isClearable
                                     isLoading={isLoadingBreeds}
@@ -233,12 +255,12 @@ function AddPet() {
                     <div className={styles.vaccinationGroup}>
                         <label className={formStyles.label}>Vaccinations:</label>
                         <div className={styles.checkboxGroup}>
-                            {vaccinationOptions.map((vaccine, index) => (
-                                <label key={vaccine.id || index}> 
+                            {vaccinationOptions.map((vaccine) => (
+                                <label key={vaccine.id}>
                                     <input
                                         type="checkbox"
-                                        name={vaccine.name.toLowerCase()} 
-                                        checked={petData.vaccinations[vaccine.name.toLowerCase()]}
+                                        name={vaccine.id}
+                                        checked={petData.vaccinations[vaccine.id] || false}
                                         onChange={handleChange}
                                     />
                                     {vaccine.name} ({vaccine.range} weeks)
