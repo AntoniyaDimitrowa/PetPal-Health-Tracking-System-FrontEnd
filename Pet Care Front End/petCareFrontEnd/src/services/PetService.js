@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:8090";
+import {baseURL} from "../config.js";
 
 export const addPet = async (pet) => {
     const selectedVaccinationIds = Object.keys(pet.vaccinations)
@@ -37,13 +36,13 @@ export const addPet = async (pet) => {
 };
 
 
-// export const getPet = async () => {
-//     let response = await axios.get(baseURL + `/pets` + id);
-//     if (response) {
-//         console.log(response.data)
-//         return response.data;
-//     }
+export const getPets = async () => {
+    let response = await axios.get(baseURL + `/pets`);
+    if (response) {
+        console.log(response.data)
+        return response.data;
+    }
 
-//     alert("Something went wrong");
-//     return "";
-// }
+    alert("Something went wrong");
+    return "";
+}

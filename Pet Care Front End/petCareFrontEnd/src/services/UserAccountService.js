@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:8080";
+import {baseURL} from "../config.js";
 
 export const getAccount = async (id) => {
     let response = await axios.get(baseURL + `/users/` + id);

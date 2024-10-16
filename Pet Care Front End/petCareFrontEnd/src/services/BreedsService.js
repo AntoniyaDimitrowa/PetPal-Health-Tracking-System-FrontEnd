@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:8090";
+import {baseURL} from "../config.js";
 
 export const getBreeds = async () => {
     let response = await axios.get(baseURL + `/breeds`);

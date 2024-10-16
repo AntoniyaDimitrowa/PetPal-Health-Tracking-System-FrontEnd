@@ -7,33 +7,63 @@
   }
   
   /* User Profile Section */
-  .userProfile {
-    background-color: #204e2a;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
+
+.infoCard {
+  background-color: #F7F7F7;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  color: #79B87E;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; 
+}
+
+
+.profileDetails {
+  display: flex;
     align-items: center;
-  }
-  
-  .profileDetails {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .profileAvatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
+    gap: 17.5rem;
+    padding-left: 3.5rem;
+}
+
+.editButtonContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.editButton {
+  color: #4caf50;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start; 
+  margin-left: auto; 
+}
+
+.editButton img {
+  width: 2rem;
+  height: auto;
+}
+
+
+.profileAvatar img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+}
   
   .profileInfo p {
     margin: 5px 0;
   }
   
+  .profilePets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .profilePets h2 {
     font-size: 1.5rem;
     color: #4caf50;
@@ -42,17 +72,25 @@
   .petCount {
     background-color: #4caf50;
     color: white;
-    padding: 10px;
+    padding: 1rem;
     border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 2.3rem;
   }
   
   .editButton {
-    background-color: white;
     color: #4caf50;
-    border: 2px solid #4caf50;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    align-self: flex-end;
+  }
+
+  .editButton img {
+    width: 2rem;
+    height: auto;
   }
   
   /* Pet List Section */
@@ -85,7 +123,7 @@
   .dailyUpdateButton,
   .vaccinationCheckButton,
   .addPetButton {
-    background-color: #4caf50;
+    background-color: #66BF7B;
     color: white;
     padding: 10px 15px;
     border: none;
