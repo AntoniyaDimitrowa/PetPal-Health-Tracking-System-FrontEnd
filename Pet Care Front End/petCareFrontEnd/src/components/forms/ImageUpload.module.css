@@ -1,0 +1,31 @@
+.imageUpload {
+    margin-bottom: 20px;
+}
+
+.uploadPlaceholder {
+    width: 14rem;
+    height: 13rem;
+    background-color: #D2E9D7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.petImage {
+    width: 14rem;
+    height: 13rem;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.fileInput {
+    display: none;
+}
+
+.photoPlusInputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}

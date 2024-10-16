@@ -1,0 +1,29 @@
+/* Tutorial Section */
+.tutorialSection {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 5rem;
+    background-color: #C3E5CC;
+}
+
+.video {
+    margin-left: 1rem;
+}
+
+.video img {
+    max-height: 25rem;
+}
+
+h2 {
+    font-size: 2.3rem;
+    margin-top: 0;
+    color: #204e2a;
+}
+
+.tutorialText {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 4rem 1rem;
+}

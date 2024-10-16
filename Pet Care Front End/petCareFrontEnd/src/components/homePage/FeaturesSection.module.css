@@ -1,0 +1,12 @@
+/* Features Section */
+.featuresSection {
+    padding: 50px;
+    text-align: center;
+    background-color: #ededed;
+}
+  
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}

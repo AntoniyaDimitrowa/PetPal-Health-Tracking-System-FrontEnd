@@ -4,7 +4,7 @@ import styles from './VaccinationsChecklist.module.css';
 function VaccinationsChecklist({ vaccinationOptions, petData, handleChange }) {
     return (
         <div className={styles.vaccinationGroup}>
-            <label>Vaccinations:</label>
+            <label >Vaccinations:</label>
             <div className={styles.checkboxGroup}>
                 {vaccinationOptions.map((vaccine) => (
                     <label key={vaccine.id}>
