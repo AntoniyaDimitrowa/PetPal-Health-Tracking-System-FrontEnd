@@ -2,20 +2,33 @@ import React from 'react';
 import styles from './VaccinationsChecklist.module.css';
 
 function VaccinationsChecklist({ vaccinationOptions, petData, handleChange }) {
+    const groupedVaccines = vaccinationOptions.reduce((groups, vaccine) => {
+        const categoryName = vaccine.name.match(/^\D+/)[0]; // Extracts non-numeric prefix, e.g., "Distemper"
+        if (!groups[categoryName]) {
+            groups[categoryName] = [];
+        }
+        groups[categoryName].push(vaccine);
+        return groups;
+    }, {});
+
     return (
         <div className={styles.vaccinationGroup}>
             <label >Vaccinations:</label>
             <div className={styles.checkboxGroup}>
-                {vaccinationOptions.map((vaccine) => (
-                    <label key={vaccine.id}>
-                        <input
-                            type="checkbox"
-                            name={vaccine.id}
-                            checked={petData.vaccinations[vaccine.id] || false}
-                            onChange={handleChange}
-                        />
-                        {vaccine.name} ({vaccine.range} weeks)
-                    </label>
+                {Object.keys(groupedVaccines).map((category) => (
+                    <div key={category} className={styles.categoryColumn}>
+                        {groupedVaccines[category].map((vaccine) => (
+                            <label key={vaccine.id}>
+                                <input
+                                    type="checkbox"
+                                    name={vaccine.id}
+                                    checked={petData.vaccinations[vaccine.id] || false}
+                                    onChange={handleChange}
+                                />
+                                {vaccine.name} ({vaccine.range} weeks)
+                            </label>
+                        ))}
+                    </div>
                 ))}
             </div>
         </div>

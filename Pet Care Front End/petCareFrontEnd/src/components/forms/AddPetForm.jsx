@@ -104,7 +104,7 @@ const AddPet = ({ onSuccess }) => {
     };
 
     return (
-        <div className={formStyles.pageContainer} style={{padding: '8rem 0'}}>
+        <div className={formStyles.pageContainer} style={{padding: '15rem 0'}}>
             <div className={formStyles.box}>
                 <h1 className={formStyles.title}>Add Pet</h1>
                 <form onSubmit={handleSubmit}>
