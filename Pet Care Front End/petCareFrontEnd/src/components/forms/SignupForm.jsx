@@ -17,10 +17,10 @@ function SignupForm() {
                 <label htmlFor="address" className={styles.label}>Address:</label>
                 <input type="text" id="address" className={styles.inputField} />
             </div>
-            <div className={styles.inputGroup}>
+            {/* <div className={styles.inputGroup}>
                 <label htmlFor="phoneNumber" className={styles.label}>Phone Number:</label>
                 <input type="text" id="phoneNumber" className={styles.inputField} />
-            </div>
+            </div> */}
             <div className={styles.inputGroup}>
                 <label htmlFor="password" className={styles.label}>Password:</label>
                 <input type="password" id="password" className={styles.inputField} />

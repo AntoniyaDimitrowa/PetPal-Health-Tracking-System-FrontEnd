@@ -1,19 +1,17 @@
 import React from 'react';
 import styles from './Account.module.css';
+import PetInfo from './PetInfo';
+import EditButton from './EditButton';
 
 function PetCard({ pet }) {
     return (
         <div className={styles.infoCard}>
-            <img src={pet.image || "/src/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
-            <div className={styles.petDetails}>
-                <p><strong>Name:</strong> {pet.name}</p>
-                <p><strong>Breed:</strong> {pet.breed.name}</p>
-                <p><strong>Gender:</strong> {pet.gender}</p>
-                <p><strong>Birthday:</strong> {new Date(pet.birthdate).toLocaleDateString()}</p>
-                <p><strong>Weight:</strong> {pet.weight} kg</p>
-                <p><strong>Vaccinations:</strong> {pet.vaccinationRecords.length > 0 ? 'Up to date' : 'No records'}</p>
+            <PetInfo pet={pet} />
+            <div className={styles.buttonsContainer}>
+                <EditButton />
+                <button className={styles.dailyUpdateButton}>Daily update</button>
             </div>
-            <button className={styles.dailyUpdateButton}>Daily update</button>
+
         </div>
     );
 }
