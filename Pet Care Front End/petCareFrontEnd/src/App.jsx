@@ -9,18 +9,20 @@ import Signup from './pages/Signup.jsx';
 import Account from './pages/Account.jsx';
 import AddPet from './pages/AddPet.jsx';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import UpdateAccountPage from './pages/UpdateAccount.jsx';
 
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path='/' element={<Home></Home>}/>
-        <Route path='/breeds' element={<Breeds></Breeds>}/>
-        <Route path='/login' element={<Login></Login>}/>
-        <Route path='/signup' element={<Signup></Signup>}/>
-        <Route path='/addPet' element={<AddPet></AddPet>}/>
-        <Route path='/users/:id' element={<Account></Account>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/breeds' element={<Breeds/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/addPet' element={<AddPet/>}/>
+        <Route path='/users/:id' element={<Account/>}/>
+        <Route path='/updateAccount/:id' element={<UpdateAccountPage />}/>
       </Routes>
       <Footer />
     </Router>

@@ -11,3 +11,13 @@ export const getAccount = async (id) => {
     alert ("Something went wrong");
     return "";
 }
+
+export const updateAccount = async (id, updatedData) => {
+    try {
+        const response = await axios.put(`${baseURL}/users/${id}`, updatedData);
+        return response.data;
+    } catch (error) {
+        console.error("Error updating account:", error);
+        return null;
+    }
+};

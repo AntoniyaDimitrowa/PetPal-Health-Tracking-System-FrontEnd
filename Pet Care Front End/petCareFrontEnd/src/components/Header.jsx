@@ -10,11 +10,11 @@ function Header() {
       </div>
       <nav>
         <ul>
-          <li><NavLink to="/">Home</NavLink></li>
+          <li><NavLink to="/" className={({ isActive }) => isActive ? styles.active : undefined}>Home</NavLink></li>
           <li><a href="#health-tracking">Health Tracking</a></li>
           <li><a href="#socialize">Socialize</a></li>
-          <li><a href="#account">Account</a></li>
-        </ul>
+          <li><NavLink to="/users/2" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li> 
+          </ul>
       </nav>
       <div className={styles.authButtons}>
         <Link to="/login"><button className={styles.btnSecondary}>Log In</button></Link>

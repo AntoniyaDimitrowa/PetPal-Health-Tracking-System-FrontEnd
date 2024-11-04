@@ -51,4 +51,16 @@
     border: 2px solid #66BF7B;
     color: #2b6a3a;
   }
+
+  nav ul li .active {
+    color: #66BF7B; 
+    font-weight: bold;
+    border-bottom: 2px solid #66BF7B;
+    padding-bottom: 4px;
+}
+
+
+nav ul li a {
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
   

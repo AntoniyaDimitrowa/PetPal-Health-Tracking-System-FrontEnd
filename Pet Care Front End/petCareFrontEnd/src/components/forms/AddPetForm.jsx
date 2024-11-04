@@ -17,14 +17,14 @@ const AddPet = ({ onSuccess }) => {
         weight: '',
         gender: '',
         vaccinations: {},
-        image: null,
+        image: null,         // Image preview URL
+        imageFile: null,     // Image file object
     });
 
     const [breedOptions, setBreedOptions] = useState([]);
     const [vaccinationOptions, setVaccinationOptions] = useState([]);
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
 
-    // Handle input field changes
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setPetData((prevData) =>
@@ -34,19 +34,14 @@ const AddPet = ({ onSuccess }) => {
         );
     };
 
-    // Handle image input
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setPetData((prevData) => ({ ...prevData, image: reader.result }));
-            };
-        }
+    const handleImageChange = (file) => {
+        setPetData((prevData) => ({
+            ...prevData,
+            imageFile: file,                      // Store the File object
+            image: URL.createObjectURL(file),     // Set preview URL
+        }));
     };
 
-    // Handle breed selection
     const handleBreedChange = (selectedOption) => {
         setPetData((prevData) => ({
             ...prevData,
@@ -54,7 +49,6 @@ const AddPet = ({ onSuccess }) => {
         }));
     };
 
-    // Fetch breeds and vaccinations
     useEffect(() => {
         const fetchBreeds = async () => {
             try {
@@ -83,11 +77,38 @@ const AddPet = ({ onSuccess }) => {
         fetchVaccinations();
     }, []);
 
-    // Handle form submission
+    const convertFileToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => resolve(reader.result.split(',')[1]); // Remove data:image prefix
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const payload = {
+            name: petData.name,
+            breedId: petData.breedId,
+            birthdate: petData.birthdate,
+            weight: petData.weight,
+            gender: petData.gender,
+            vaccinations: petData.vaccinations,
+        };
+
+        if (petData.imageFile) {
+            try {
+                const base64Image = await convertFileToBase64(petData.imageFile);
+                payload.image = base64Image;
+            } catch (error) {
+                console.error("Error converting image to base64:", error);
+                return;
+            }
+        }
+
         try {
-            await addPet(petData);
+            await addPet(payload);
             if (onSuccess) onSuccess();
             setPetData({
                 name: '',
@@ -97,6 +118,7 @@ const AddPet = ({ onSuccess }) => {
                 gender: '',
                 vaccinations: {},
                 image: null,
+                imageFile: null,
             });
         } catch (error) {
             console.error("Error adding pet:", error);

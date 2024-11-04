@@ -10,7 +10,9 @@ const HeroSection = () => {
           Healthy <span className={styles.whiteText}>Pets,</span> Happy <span className={styles.whiteText}>Pets!</span>
         </h1>
         <div className={styles.buttonsCenter}>
-          <button className={styles.btnPrimary}>Sign Up Now</button>
+          <Link to="/signup">
+            <button className={styles.btnPrimary}>Sign Up Now</button>
+          </Link>
           <Link to="/login">
             <button className={styles.btnSecondary}>Log In</button>
           </Link>
