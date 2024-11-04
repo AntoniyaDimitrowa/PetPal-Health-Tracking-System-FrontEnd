@@ -1,0 +1,39 @@
+/* ProfileInfo.module.css */
+.profileDetails {
+    display: flex;
+    align-items: center;
+    gap: 16rem;
+}
+
+.profileAvatar img {
+    width: auto;
+    height: 14rem;
+    border-radius: 10px;
+}
+
+.profileInfo p {
+    margin: 5px 0;
+}
+
+.profilePets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profilePets h2 {
+    font-size: 1.5rem;
+    color: #4caf50;
+}
+
+.petCount {
+    background-color: #4caf50;
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 2.3rem;
+}

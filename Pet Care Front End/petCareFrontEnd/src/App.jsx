@@ -21,8 +21,8 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/addPet' element={<AddPet/>}/>
-        <Route path='/users/:id' element={<Account/>}/>
-        <Route path='/updateAccount/:id' element={<UpdateAccountPage />}/>
+        <Route path='/account' element={<Account/>}/>
+        <Route path='/account/edit' element={<UpdateAccountPage />}/>
       </Routes>
       <Footer />
     </Router>

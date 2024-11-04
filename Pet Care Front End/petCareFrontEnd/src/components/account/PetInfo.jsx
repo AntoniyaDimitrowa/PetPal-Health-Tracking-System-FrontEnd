@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Account.module.css';
+import styles from './PetInfo.module.css';
 
 function PetInfo({ pet }) {
     return (

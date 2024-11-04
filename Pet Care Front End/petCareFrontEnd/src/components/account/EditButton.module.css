@@ -1,0 +1,20 @@
+/* EditButton.module.css */
+.editButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.editButton {
+    color: #4caf50;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    align-self: flex-start; 
+    margin-left: auto; 
+}
+
+.editButton img {
+    width: 2rem;
+    height: auto;
+}

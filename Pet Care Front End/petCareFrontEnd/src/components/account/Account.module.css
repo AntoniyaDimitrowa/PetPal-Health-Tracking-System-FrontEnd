@@ -1,17 +1,15 @@
 /* Account.module.css */
 
-/* General Styles */
 .accountContainer {
     padding: 3rem 9rem;
-    background-color: #def4e7; /* Light green background */
+    background-color: #C3E5CC; 
   }
   
-  /* User Profile Section */
 
 .infoCard {
   background-color: #F7F7F7;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   border-radius: 1rem;
   color: #4caf50;
   display: flex;
@@ -20,120 +18,17 @@
   gap: 3rem;
 }
 
-.petInfo {
-  background-color: #F7F7F7;
-  border-radius: 1rem;
-  color: #4caf50;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; 
-  min-width: 60%;
-}
-
-.profileDetails {
-  display: flex;
-  align-items: center;
-  gap: 16rem;
-}
-
-.editButtonContainer{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.editButton {
-  color: #4caf50;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  align-self: flex-start; 
-  margin-left: auto; 
-}
-
-.editButton img {
-  width: 2rem;
-  height: auto;
-}
-
 .buttonsContainer{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 8rem;
 }
-
-.profileAvatar img {
-  width: auto;
-  height: 14rem;
-  border-radius: 10px;
-}
-  
-  .profileInfo p {
-    margin: 5px 0;
-  }
-  
-  .profilePets {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .profilePets h2 {
-    font-size: 1.5rem;
-    color: #4caf50;
-  }
-  
-  .petCount {
-    background-color: #4caf50;
-    color: white;
-    padding: 1rem;
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    text-align: center;
-    font-size: 2.3rem;
-  }
-  
-  .editButton {
-    color: #4caf50;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-end;
-  }
-
-  .editButton img {
-    width: 2rem;
-    height: auto;
-  }
   
   /* Pet List Section */
   .petList {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-  
-  .petCard {
-    background-color: white;
-    border: 2px solid #4caf50;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-  }
-  
-  .petImage {
-    width: auto;
-    height: 14rem;
-    border-radius: 10px;
-  }
-  
-  .petDetails p {
-    margin: 5px 0;
   }
   
   .dailyUpdateButton,

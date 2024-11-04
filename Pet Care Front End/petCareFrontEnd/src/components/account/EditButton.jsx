@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Account.module.css';
+import styles from './EditButton.module.css';
 
 function EditButton({ onClick }) {
     return (

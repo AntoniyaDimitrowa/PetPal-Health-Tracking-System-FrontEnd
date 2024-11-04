@@ -9,7 +9,7 @@ import PetCard from '../components/account/PetCard';
 export default function Account() {
   const [account, setAccount] = useState(null); 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const id = '2'; //When I have Login this should be changed to the loged in userId
 
   useEffect(() => {
     const fetchAccount = async () => {
