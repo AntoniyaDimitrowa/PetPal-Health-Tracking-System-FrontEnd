@@ -15,7 +15,7 @@
     color: #4caf50;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; 
+    align-items: center; 
     min-width: 60%;
 }
 

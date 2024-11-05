@@ -13,7 +13,7 @@ function Header() {
           <li><NavLink to="/" className={({ isActive }) => isActive ? styles.active : undefined}>Home</NavLink></li>
           <li><a href="#health-tracking">Health Tracking</a></li>
           <li><a href="#socialize">Socialize</a></li>
-          <li><NavLink to="/users/2" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li> 
+          <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li> 
           </ul>
       </nav>
       <div className={styles.authButtons}>
