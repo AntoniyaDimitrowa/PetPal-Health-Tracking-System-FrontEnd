@@ -17,7 +17,7 @@ export const getVaccinationsForPuppy = async () => {
     let response = await axios.get(baseURL + `/vaccinations`);
     if (response) {
         // Filter vaccinations by type "ForPuppy"
-        const filteredVaccinations = response.data.filter(vaccination => vaccination.type === "ForPuppy");
+        const filteredVaccinations = response.data.filter(vaccination => vaccination.type === "FOR_PUPPY");
         return filteredVaccinations;
     }
 
