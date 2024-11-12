@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { addYears, isBefore } from 'date-fns';
 import VaccineRecordTable from './VaccineRecordTable';
 import VaccineFilter from './VaccineFilter';
 import AddVaccinationForm from '../forms/AddVaccinationForm';
 import UpcomingVaccinesList from './UpcomingVaccinesList';
 import styles from './VaccineRecords.module.css';
 import { usePet } from '../../context/PetContext';
+import { calculateUpcomingVaccines } from '../../services/VaccinationsService';
 
 const VaccineRecords = () => {
     const { pet } = usePet();
@@ -16,22 +16,21 @@ const VaccineRecords = () => {
 
     const [filterType, setFilterType] = useState('');
     const [vaccinationRecords, setVaccinationRecords] = useState(pet.vaccinationRecords || []);
-    const [newVaccine, setNewVaccine] = useState({ name: '', type: '', date: '' });
+    const [newVaccine, setNewVaccine] = useState({ vaccine_id: '', name: '', type: '', date: '' });
     const [upcomingVaccines, setUpcomingVaccines] = useState([]);
 
     useEffect(() => {
-        const calculateUpcomingVaccines = () => {
-            const upcoming = vaccinationRecords.filter(record => {
-                const nextDueDate = record.vaccination.type === 'ForPuppy'
-                    ? addYears(new Date(record.date), record.vaccination.range / 52)
-                    : addYears(new Date(record.date), record.vaccination.range);
-                return isBefore(new Date(), nextDueDate);
-            });
-            setUpcomingVaccines(upcoming);
+        const fetchUpcomingVaccines = async () => {
+            try {
+                const upcoming = await calculateUpcomingVaccines(pet);
+                setUpcomingVaccines(upcoming);
+            } catch (error) {
+                console.error("Error fetching upcoming vaccines:", error);
+            }
         };
 
-        calculateUpcomingVaccines();
-    }, [vaccinationRecords]);
+        fetchUpcomingVaccines();
+    }, [pet, vaccinationRecords]); // Recalculate when vaccination records or pet data changes
 
     const handleAddVaccination = (newRecord) => {
         setVaccinationRecords([...vaccinationRecords, newRecord]);
@@ -48,7 +47,12 @@ const VaccineRecords = () => {
             </div>
 
             <div className={styles.rightPanel}>
-                <AddVaccinationForm newVaccine={newVaccine} setNewVaccine={setNewVaccine} handleAddVaccination={handleAddVaccination} />
+                <AddVaccinationForm 
+                    newVaccine={newVaccine} 
+                    setNewVaccine={setNewVaccine} 
+                    handleAddVaccination={handleAddVaccination} 
+                    pet={pet}
+                />
                 <UpcomingVaccinesList upcomingVaccines={upcomingVaccines} />
             </div>
         </div>

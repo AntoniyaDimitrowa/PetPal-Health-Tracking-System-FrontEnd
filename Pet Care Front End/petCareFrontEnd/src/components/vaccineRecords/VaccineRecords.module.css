@@ -47,6 +47,13 @@
     margin-top: 1rem;
   }
 
+  .box ul li {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 2rem; /* Space between columns */
+    padding-left: 2rem;
+  }
+
   .title {
     color: #07621d; 
     font-size: 2rem;

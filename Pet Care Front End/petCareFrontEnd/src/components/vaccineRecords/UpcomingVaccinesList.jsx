@@ -8,7 +8,12 @@ const UpcomingVaccinesList = ({ upcomingVaccines }) => (
     <ul>
       {upcomingVaccines.map((record, index) => (
         <li key={index}>
-          {record.vaccination.name} due by {format(addYears(new Date(record.date), record.vaccination.range), 'yyyy-MM-dd')}
+          <p>
+          {record.vaccination.name}
+          </p>
+           <p>
+           {format(new Date(record.dueDate), 'yyyy-MM-dd')}
+          </p>
         </li>
       ))}
     </ul>

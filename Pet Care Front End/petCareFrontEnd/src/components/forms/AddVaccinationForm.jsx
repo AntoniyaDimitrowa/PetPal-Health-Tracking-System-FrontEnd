@@ -1,71 +1,93 @@
-// src/components/VaccineRecordsPage/AddVaccinationForm.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Select from 'react-select'; // Import react-select
+import { calculateVaccinationOptions } from '../../services/VaccinationsService';
 import styles from './Form.module.css';
 import vacStyles from './AddVaccinationForm.module.css';
+import customStyles from './CustomStyles';
 
-const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination }) => {
+const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, pet }) => {
+  const [vaccinationOptions, setVaccinationOptions] = useState([]);
+  const [isLoadingVaccines, setIsLoadingVaccines] = useState(true);
+
+  // Handle changes to form inputs
   const handleNewVaccineChange = (event) => {
     const { name, value } = event.target;
     setNewVaccine({ ...newVaccine, [name]: value });
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const newRecord = {
-      vaccination: { name: newVaccine.name, type: newVaccine.type, range: 0 },
-      date: new Date(newVaccine.date),
-    };
-    handleAddVaccination(newRecord);
-    setNewVaccine({ name: '', type: '', date: '' });
+  const handleSelectChange = (selectedOption) => {
+    setNewVaccine({ ...newVaccine, vaccineId: selectedOption?.value || '' }); // Store vaccineId
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const selectedVaccine = vaccinationOptions.find(v => v.id === newVaccine.vaccineId); // Match by vaccineId
+
+    if (!selectedVaccine) {
+      alert("Please select a valid vaccine.");
+      return;
+    }
+
+    const newRecord = {
+      vaccinationId: selectedVaccine.id, // Use vaccineId
+      date: new Date(newVaccine.date),
+    };
+
+    handleAddVaccination(newRecord);
+    setNewVaccine({ vaccineId: '', type: '', date: '' });
+  };
+
+  useEffect(() => {
+    const fetchVaccinations = async () => {
+      try {
+        setIsLoadingVaccines(true);
+        const options = await calculateVaccinationOptions(pet);
+        setVaccinationOptions(options); 
+      } catch (err) {
+        console.error('Error fetching vaccinations:', err);
+      } finally {
+        setIsLoadingVaccines(false);
+      }
+    };
+
+    fetchVaccinations();
+  }, [pet]);
+
   return (
-      <div className={vacStyles.box}>
-        <h2 className={styles.title}>Add New Vaccination</h2>
-        <form onSubmit={handleFormSubmit}>
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="name">Vaccine Name:</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              className={styles.inputField}
-              value={newVaccine.name}
-              onChange={handleNewVaccineChange}
-            />
-          </div>
+    <div className={vacStyles.box}>
+      <h2 className={styles.title}>Add New Vaccination</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div className={styles.inputGroup}>
+          <label className={styles.label} htmlFor="vaccineId">Vaccine Name:</label>
+          <Select
+            id="vaccineId"
+            name="vaccineId"
+            options={vaccinationOptions}
+            value={vaccinationOptions.find((option) => option.value === newVaccine.vaccineId) || null} // Bind value by vaccineId
+            onChange={handleSelectChange}
+            isClearable
+            isLoading={isLoadingVaccines}
+            placeholder="Select or type a vaccine name..."
+            className={vacStyles.selectField}
+            styles={customStyles}
+          />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="type">Type:</label>
-            <select
-              id="type"
-              name="type"
-              className={styles.dropdown}
-              value={newVaccine.type}
-              onChange={handleNewVaccineChange}
-            >
-              <option value="">Select Type</option>
-              <option value="ForPuppy">For Puppy</option>
-              <option value="ForAdult">For Adult</option>
-            </select>
-          </div>
+        <div className={styles.inputGroup}>
+          <label className={styles.label} htmlFor="date">Date:</label>
+          <input
+            id="date"
+            type="date"
+            name="date"
+            className={styles.inputField}
+            value={newVaccine.date}
+            onChange={handleNewVaccineChange}
+          />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="date">Date:</label>
-            <input
-              id="date"
-              type="date"
-              name="date"
-              className={styles.inputField}
-              value={newVaccine.date}
-              onChange={handleNewVaccineChange}
-            />
-          </div>
-
-          <button type="submit" className={styles.actionButton}>Add Record</button>
-        </form>
-      </div>
+        <button type="submit" className={styles.actionButton}>Add Record</button>
+      </form>
+    </div>
   );
 };
 
