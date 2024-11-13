@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './VaccineRecords.module.css';
+import formStyles from '../forms/Form.module.css';
 
-const VaccineFilter = ({ filterType, setFilterType }) => {
-  const handleFilterChange = (event) => {
-    setFilterType(event.target.value);
+const VaccineFilter = ({ filters, setFilters }) => {
+  const { name, type, startDate, endDate } = filters;
+
+  const handleChange = (key, value) => {
+    setFilters({ ...filters, [key]: value });
   };
 
   return (
-    <div className={styles.vaccineFilter}>
-      <label>
-        Filter by Type:
-        <select value={filterType} onChange={handleFilterChange}>
-          <option value="">All</option>
-          <option value="ForPuppy">For Puppy</option>
-          <option value="ForAdult">For Adult</option>
-        </select>
-      </label>
+    <div className={styles.filters}>
+      <input
+        className={formStyles.inputField}
+        type="text"
+        placeholder="Filter by name"
+        value={name}
+        onChange={e => handleChange('name', e.target.value)}
+      />
+      <select className={formStyles.dropdown} value={type} onChange={e => handleChange('type', e.target.value)}>
+        <option value="">All Types</option>
+        <option value="FOR_PUPPY">Puppy Vaccines</option>
+        <option value="FOR_ADULT">Adult Vaccines</option>
+      </select>
+      <input
+        className={formStyles.inputField}
+        type="date"
+        value={startDate}
+        onChange={e => handleChange('startDate', e.target.value)}
+      />
+      <input
+        className={formStyles.inputField}
+        type="date"
+        value={endDate}
+        onChange={e => handleChange('endDate', e.target.value)}
+      />
     </div>
   );
 };

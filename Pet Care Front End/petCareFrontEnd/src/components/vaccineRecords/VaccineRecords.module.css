@@ -14,20 +14,6 @@
   width: 30%;
 }
 
-.recordsTable {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .recordsTable th, .recordsTable td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .vaccineFilter label {
-    display: block;
-    margin-bottom: 10px;
-  }
   
   ul {
     list-style-type: none;
@@ -59,5 +45,41 @@
     font-size: 2rem;
     margin-bottom: 1.5rem;
     font-family: 'Knewave', cursive; 
+  }
+  
+  .filters {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .recordsTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .recordsTable th, .recordsTable td {
+    padding: 1rem; 
+    text-align: left; 
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .recordsTable th {
+    background-color: #f4f4f4; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+  }
+  
+  .recordsTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9; 
+  }
+  
+  /* Scrollable Table Container */
+  .tableContainer {
+    max-height: 35.5rem;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    margin-bottom: 2rem;
   }
   

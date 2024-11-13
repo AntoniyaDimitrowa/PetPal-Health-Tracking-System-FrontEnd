@@ -14,7 +14,6 @@ const VaccineRecords = () => {
         return <p>No pet data available. Please go back and select a pet.</p>;
     }
 
-    const [filterType, setFilterType] = useState('');
     const [vaccinationRecords, setVaccinationRecords] = useState(pet.vaccinationRecords || []);
     const [newVaccine, setNewVaccine] = useState({ vaccine_id: '', name: '', type: '', date: '' });
     const [upcomingVaccines, setUpcomingVaccines] = useState([]);
@@ -36,21 +35,29 @@ const VaccineRecords = () => {
         setVaccinationRecords([...vaccinationRecords, newRecord]);
     };
 
+
+    const [filters, setFilters] = useState({
+        name: '',
+        type: '',
+        startDate: '',
+        endDate: '',
+    });
+
     return (
         <div className={styles.vaccineRecordsPageContainer}>
             <div className={styles.leftPanel}>
                 <div className={styles.box}>
                     <h2 className={styles.title}>Vaccination Records</h2>
-                    <VaccineFilter filterType={filterType} setFilterType={setFilterType} />
-                    <VaccineRecordTable records={vaccinationRecords} filterType={filterType} />
+                    <VaccineFilter filters={filters} setFilters={setFilters} />
+                    <VaccineRecordTable records={vaccinationRecords} filters={filters} />
                 </div>
             </div>
 
             <div className={styles.rightPanel}>
-                <AddVaccinationForm 
-                    newVaccine={newVaccine} 
-                    setNewVaccine={setNewVaccine} 
-                    handleAddVaccination={handleAddVaccination} 
+                <AddVaccinationForm
+                    newVaccine={newVaccine}
+                    setNewVaccine={setNewVaccine}
+                    handleAddVaccination={handleAddVaccination}
                     pet={pet}
                 />
                 <UpcomingVaccinesList upcomingVaccines={upcomingVaccines} />

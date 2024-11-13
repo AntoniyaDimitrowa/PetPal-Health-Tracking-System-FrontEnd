@@ -51,73 +51,92 @@ export const calculateVaccinationOptions = async (pet) => {
 
 
   export const calculateUpcomingVaccines = async (pet) => {
-    console.log(pet);
-  
+    const filteredVaccines = await calculateVaccinationOptions(pet);
+
+const filteredIds = filteredVaccines.map(vaccine => {
+  return vaccine.value;
+});
+
+console.log('Filtered IDs After Map:', filteredIds);
     const allVaccinations = await getVaccinations();
+    
+    const relevantVaccines = allVaccinations.filter(vaccination => {
+      return filteredIds.includes(vaccination.id);
+    });
+
+
     const vaccinationRecords = pet.vaccinationRecords || [];
-    const petBirthDate = new Date(pet.birthdate); // Parse birthdate into a Date object
+    const petBirthDate = new Date(pet.birthdate);
   
     if (isNaN(petBirthDate.getTime())) {
       console.error(`Invalid birthdate: ${pet.birthdate}`);
-      return []; // Return an empty array if the birthdate is invalid
+      return [];
     }
   
     const upcomingVaccines = [];
   
-    for (const vaccination of allVaccinations) {
-      if (vaccination.type === "FOR_PUPPY") {
-        // Handle puppy vaccines
-        const minAgeWeeks = vaccination.range;
-        const minAgeDate = new Date(petBirthDate); // Clone birthDate to calculate the puppy vaccine date
-        minAgeDate.setDate(minAgeDate.getDate() + minAgeWeeks * 7); // Add the range in weeks to the birth date
+    // Separate vaccines into puppy and adult lists
+    const puppyVaccines = relevantVaccines.filter(vaccine => vaccine.type === "FOR_PUPPY");
+    const adultVaccines = relevantVaccines.filter(vaccine => vaccine.type === "FOR_ADULT");
   
-        if (isNaN(minAgeDate.getTime())) {
-          console.error(`Invalid date for puppy vaccine: ${vaccination.name}`);
-          continue; // Skip this vaccination if date calculation fails
-        }
+    // Handle puppy vaccines
+    for (const vaccination of puppyVaccines) {
+      const minAgeWeeks = vaccination.range;
+      const dueDate = new Date(petBirthDate);
+      dueDate.setDate(dueDate.getDate() + minAgeWeeks * 7);
   
+      if (!isNaN(dueDate.getTime())) {
         upcomingVaccines.push({
           vaccination,
-          dueDate: minAgeDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
+          dueDate: dueDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
         });
-      } else if (vaccination.type === "FOR_ADULT") {
-        // Handle adult vaccines
-        const correspondingPuppyVaccination = allVaccinations.find(
-          (v) => v.name === vaccination.name + "3" && v.type === "FOR_PUPPY"
-        );
+      } else {
+        console.error(`Invalid date for puppy vaccine: ${vaccination.name}`);
+      }
+    }
   
-        if (correspondingPuppyVaccination) {
-          // Find the latest completed vaccine record for the corresponding puppy vaccine
-          const latestPuppyVaccineRecord = vaccinationRecords
-            .filter(
-              (record) =>
-                record.vaccination.id === correspondingPuppyVaccination?.id
-            )
+
+    // Handle adult vaccines
+    for (const vaccination of adultVaccines) {
+      // Check if there is already a record for this adult vaccine
+      const existingAdultRecord = vaccinationRecords
+        .filter(record => record.vaccination?.id === vaccination.id)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+  
+      if (existingAdultRecord) {
+        // Calculate due date based on the last record
+        const dueDate = new Date(existingAdultRecord.date);
+        dueDate.setFullYear(dueDate.getFullYear() + vaccination.range);
+  
+        if (!isNaN(dueDate.getTime())) {
+          upcomingVaccines.push({
+            vaccination,
+            dueDate: dueDate.toISOString().split("T")[0],
+          });
+        } else {
+          console.error(`Invalid date for adult vaccine: ${vaccination.name}`);
+        }
+
+      } else {
+          const latestPuppyRecord = vaccinationRecords
+            .filter(record => (record.vaccination.name === vaccination.name && record.vaccination.type === "FOR_PUPPY") || (record.vaccination.name === (vaccination.name + "3") && record.vaccination.type === "FOR_PUPPY"))
             .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
   
-          console.log(latestPuppyVaccineRecord);
+          if (latestPuppyRecord) {
+            // Calculate the first adult vaccine's due date
+            const dueDate = new Date(latestPuppyRecord.date);
+            dueDate.setFullYear(dueDate.getFullYear() + vaccination.range);
   
-          if (latestPuppyVaccineRecord) {
-            const firstAdultDueDate = new Date(latestPuppyVaccineRecord.date);
-            console.log(firstAdultDueDate);
-            firstAdultDueDate.setFullYear(
-              firstAdultDueDate.getFullYear() + vaccination.range
-            );
-            console.log(firstAdultDueDate);
-  
-            if (isNaN(firstAdultDueDate.getTime())) {
-              console.error(
-                `Invalid date for adult vaccine: ${vaccination.name}`
-              );
-              continue; // Skip this vaccine if date calculation fails
+            if (!isNaN(dueDate.getTime())) {
+              upcomingVaccines.push({
+                vaccination,
+                dueDate: dueDate.toISOString().split("T")[0],
+              });
+            } else {
+              console.error(`Invalid date for adult vaccine: ${vaccination.name}`);
             }
-  
-            upcomingVaccines.push({
-              vaccination,
-              dueDate: firstAdultDueDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
-            });
           }
-        }
+        
       }
     }
   
@@ -125,10 +144,6 @@ export const calculateVaccinationOptions = async (pet) => {
     upcomingVaccines.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   
     // Return the top 5 nearest upcoming vaccinations
-    const top5Vaccines = upcomingVaccines.slice(0, 5);
-  
-    console.log(top5Vaccines);
-  
-    return top5Vaccines;
+    return upcomingVaccines.slice(0, 5);
   };
   
