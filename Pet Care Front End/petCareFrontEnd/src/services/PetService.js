@@ -45,3 +45,18 @@ export const getPets = async () => {
     alert("Something went wrong");
     return "";
 }
+
+export const addVaccinationRecordToPet = async (petId, vaccinationId, date) => {
+  try {
+    const payload = {
+      petId,
+      vaccinationId,
+      date,
+    };
+    const response = await axios.post(`${baseURL}/vaccinations`, payload);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding vaccination record:", error);
+    throw error; // Let the caller handle errors
+  }
+};

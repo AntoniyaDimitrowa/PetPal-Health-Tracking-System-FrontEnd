@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'; // Import react-select
-import { calculateVaccinationOptions } from '../../services/VaccinationsService';
+import Select from 'react-select';
+import { calculateVaccinationOptions, getVaccinations } from '../../services/VaccinationsService';
+import { addVaccinationRecordToPet } from '../../services/PetService';
 import styles from './Form.module.css';
 import vacStyles from './AddVaccinationForm.module.css';
 import customStyles from './CustomStyles';
 
-const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, pet }) => {
+const AddVaccinationForm = ({ newVaccine, setNewVaccine, pet, handleAddVaccination }) => {
   const [vaccinationOptions, setVaccinationOptions] = useState([]);
   const [isLoadingVaccines, setIsLoadingVaccines] = useState(true);
+
+  // Fetch vaccination options and update state
+  const fetchVaccinationOptions = async () => {
+    try {
+      setIsLoadingVaccines(true);
+      const options = await calculateVaccinationOptions(pet);
+      setVaccinationOptions(options);
+    } catch (err) {
+      console.error('Error fetching vaccinations:', err);
+    } finally {
+      setIsLoadingVaccines(false);
+    }
+  };
 
   // Handle changes to form inputs
   const handleNewVaccineChange = (event) => {
@@ -16,41 +30,52 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, p
   };
 
   const handleSelectChange = (selectedOption) => {
-    setNewVaccine({ ...newVaccine, vaccineId: selectedOption?.value || '' }); // Store vaccineId
+    setNewVaccine({ ...newVaccine, vaccineId: selectedOption?.value || '' });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const selectedVaccine = vaccinationOptions.find(v => v.id === newVaccine.vaccineId); // Match by vaccineId
 
-    if (!selectedVaccine) {
-      alert("Please select a valid vaccine.");
+    const selectedVaccine = vaccinationOptions.find((v) => v.value === newVaccine.vaccineId);
+
+    const vaccinations = await getVaccinations();
+    const vaccination = vaccinations.find((v) => v.id === selectedVaccine.value);
+
+    if (!vaccination) {
+      alert('Vaccination details not found. Please try again.');
       return;
     }
 
     const newRecord = {
-      vaccinationId: selectedVaccine.id, // Use vaccineId
-      date: new Date(newVaccine.date),
+      vaccination: {
+        name: vaccination.name,
+        type: vaccination.type,
+      },
+      date: newVaccine.date,
     };
 
-    handleAddVaccination(newRecord);
-    setNewVaccine({ vaccineId: '', type: '', date: '' });
+    try {
+      await addVaccinationRecordToPet(pet.id, selectedVaccine.value, newVaccine.date);
+      
+      // Reset the form fields
+      setNewVaccine({ vaccineId: '', type: '', date: '' });
+      
+      handleAddVaccination(newRecord);
+
+      // Recalculate options only if the added vaccine type is "FOR_PUPPY"
+      if (vaccination.type === 'FOR_PUPPY') {
+        fetchVaccinationOptions();
+      }
+
+    } catch (error) {
+      console.error('Failed to add vaccination record:', error);
+      alert('Error adding vaccination record. Please try again.');
+    }
   };
 
+  // Fetch vaccination options when the pet changes
   useEffect(() => {
-    const fetchVaccinations = async () => {
-      try {
-        setIsLoadingVaccines(true);
-        const options = await calculateVaccinationOptions(pet);
-        setVaccinationOptions(options); 
-      } catch (err) {
-        console.error('Error fetching vaccinations:', err);
-      } finally {
-        setIsLoadingVaccines(false);
-      }
-    };
-
-    fetchVaccinations();
+    fetchVaccinationOptions();
   }, [pet]);
 
   return (
@@ -58,12 +83,14 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, p
       <h2 className={styles.title}>Add New Vaccination</h2>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.inputGroup}>
-          <label className={styles.label} htmlFor="vaccineId">Vaccine Name:</label>
+          <label className={styles.label} htmlFor="vaccineId">
+            Vaccine Name:
+          </label>
           <Select
             id="vaccineId"
             name="vaccineId"
             options={vaccinationOptions}
-            value={vaccinationOptions.find((option) => option.value === newVaccine.vaccineId) || null} // Bind value by vaccineId
+            value={vaccinationOptions.find((option) => option.value === newVaccine.vaccineId) || null}
             onChange={handleSelectChange}
             isClearable
             isLoading={isLoadingVaccines}
@@ -74,7 +101,9 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, p
         </div>
 
         <div className={styles.inputGroup}>
-          <label className={styles.label} htmlFor="date">Date:</label>
+          <label className={styles.label} htmlFor="date">
+            Date:
+          </label>
           <input
             id="date"
             type="date"
@@ -85,7 +114,9 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination, p
           />
         </div>
 
-        <button type="submit" className={styles.actionButton}>Add Record</button>
+        <button type="submit" className={styles.actionButton}>
+          Add Record
+        </button>
       </form>
     </div>
   );

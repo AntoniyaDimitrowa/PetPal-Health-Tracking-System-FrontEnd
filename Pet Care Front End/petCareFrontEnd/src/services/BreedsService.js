@@ -5,6 +5,7 @@ export const getBreeds = async () => {
     let response = await axios.get(baseURL + `/breeds`);
     if (response)
     {
+        //debugger;
         console.log(response.data)
         return response.data;
     }

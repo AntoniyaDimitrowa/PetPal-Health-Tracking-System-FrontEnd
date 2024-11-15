@@ -1,3 +1,9 @@
+.pagePlusMessages {
+  display: flex;
+  flex-direction: column;
+  background-color: #C3E5CC;
+}
+
 .vaccineRecordsPageContainer {
   display: flex;
 }
