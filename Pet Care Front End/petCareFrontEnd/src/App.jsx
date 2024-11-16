@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Account from './pages/Account';
 import AddPet from './pages/AddPet';
+import UpdatePet from './pages/UpdatePetInformation';
 import PetVaccines from './pages/PetVaccines';
 import UpdateAccountPage from './pages/UpdateAccount';
 import { PetProvider } from './context/PetContext'; 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/addPet' element={<AddPet />} />
+          <Route path='/updatePet' element={<UpdatePet />} />
           <Route path='/account' element={<Account />} />
           <Route path='/account/edit' element={<UpdateAccountPage />} />
           <Route path='/pet/vaccines' element={<PetVaccines />} />

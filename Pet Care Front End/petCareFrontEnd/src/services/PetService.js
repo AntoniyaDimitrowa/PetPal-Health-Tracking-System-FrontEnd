@@ -60,3 +60,31 @@ export const addVaccinationRecordToPet = async (petId, vaccinationId, date) => {
     throw error; // Let the caller handle errors
   }
 };
+
+
+export const updatePet = async (pet) => {
+    try {
+        const formattedData = {
+            petId: pet,is,
+            name: pet.name,
+            breedId: parseInt(pet.breedId),
+            gender: pet.gender.toUpperCase(),
+            birthdate: new Date(pet.birthdate).toISOString().split('T')[0],
+            weight: parseFloat(pet.weight),
+            image: pet.image,
+        };
+
+        let response = await axios.put(baseURL + `/pets`, formattedData);
+
+        if (response && response.data) {
+            console.log("Pet updated successfully:", response.data);
+            return response.data; // Return success response
+        } else {
+            console.error("No response data found.");
+            throw new Error("No response data found."); // Ensure error propagation for unexpected responses
+        }
+    } catch (error) {
+        console.error("Error updating pet:", error);
+        throw error; // Let the caller handle the error
+    }
+};
