@@ -1,6 +1,6 @@
 import React from 'react';
-import SubmitButton from './SubmitButton'; // Adjust path as necessary
-import styles from './Form.module.css'; 
+import SubmitButton from '../SubmitButton'; // Adjust path as necessary
+import styles from '../Form.module.css'; 
 
 function LoginForm() {
     return (

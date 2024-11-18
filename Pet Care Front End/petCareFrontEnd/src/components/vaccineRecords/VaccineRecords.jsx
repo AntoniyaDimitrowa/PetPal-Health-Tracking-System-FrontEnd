@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import VaccineRecordTable from './VaccineRecordTable';
 import VaccineFilter from './VaccineFilter';
-import AddVaccinationForm from '../forms/AddVaccinationForm';
+import AddVaccinationForm from '../forms/pet/AddVaccinationForm';
 import UpcomingVaccinesList from './UpcomingVaccinesList';
 import styles from './VaccineRecords.module.css';
 import { usePet } from '../../context/PetContext';
@@ -31,8 +31,10 @@ const VaccineRecords = () => {
 
     // Recalculate upcoming vaccines
     const recalculateUpcomingVaccines = async (pet) => {
+        
         try {
             const upcoming = await calculateUpcomingVaccines(pet);
+            
             setUpcomingVaccines(upcoming);
         } catch (error) {
             console.error('Error fetching upcoming vaccines:', error);
@@ -45,7 +47,7 @@ const VaccineRecords = () => {
             // Consolidate updates
             const updatedRecords = [...vaccinationRecords, newRecord];
             const updatedPet = { ...pet, vaccinationRecords: updatedRecords };
-
+            
             // Update the pet state
             setPet(updatedPet);
             setVaccinationRecords(updatedRecords);
@@ -66,7 +68,7 @@ const VaccineRecords = () => {
             setVaccinationRecords(pet.vaccinationRecords || []);
             recalculateUpcomingVaccines(pet);
         }
-    }, [pet]);
+    }, []);
 
     useEffect(() => {
         if (successMessage) {
@@ -82,11 +84,11 @@ const VaccineRecords = () => {
         }
     }, [errorMessages]);
 
-    useEffect(() => {
-        console.log("Pet updated:", pet);
-        console.log("Vaccination Records updated:", vaccinationRecords);
-        console.log("Upcoming Vaccines updated:", upcomingVaccines);
-    }, [pet, vaccinationRecords, upcomingVaccines]);
+    // useEffect(() => {
+    //     console.log("Pet updated:", pet);
+    //     console.log("Vaccination Records updated:", vaccinationRecords);
+    //     console.log("Upcoming Vaccines updated:", upcomingVaccines);
+    // }, [pet]);
 
     return (
         <div className={styles.pagePlusMessages}>

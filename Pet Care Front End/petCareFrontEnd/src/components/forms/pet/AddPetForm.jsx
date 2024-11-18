@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import formStyles from './Form.module.css';
+import formStyles from '../Form.module.css';
 import PetInputFields from './PetInputFields';
-import SubmitButton from './SubmitButton';
-import { getBreeds } from '../../services/BreedsService';
-import { addPet } from '../../services/PetService';
-import { validatePetForm } from '../../validations/PetValidation';
-import ErrorMessage from '../messages/ErrorMessge';
+import SubmitButton from '../SubmitButton';
+import { getBreeds } from '../../../services/BreedsService';
+import { addPet } from '../../../services/PetService';
+import { validatePetForm } from '../../../validations/PetValidation';
+import ErrorMessage from '../../messages/ErrorMessge';
+import { getVaccinationsForPuppy } from '../../../services/VaccinationsService';
+import VaccinationsChecklist from './VaccinationsChecklist';
 
 const AddPetForm = ({ onSuccess }) => {
     const [petData, setPetData] = useState({
@@ -14,11 +16,14 @@ const AddPetForm = ({ onSuccess }) => {
         birthdate: '',
         weight: '',
         gender: '',
+        vaccinations: {},
         image: null,         // Image preview URL
         imageFile: null,     // Image file object
+        userId: 2
     });
 
     const [breedOptions, setBreedOptions] = useState([]);
+    const [vaccinationOptions, setVaccinationOptions] = useState([]);
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
     const [errors, setErrors] = useState({});
 
@@ -34,7 +39,17 @@ const AddPetForm = ({ onSuccess }) => {
             }
         };
 
+        const fetchVaccinations = async () => {
+            try {
+                const vaccinations = await getVaccinationsForPuppy();
+                setVaccinationOptions(vaccinations);
+            } catch (err) {
+                console.error('Error fetching vaccinations:', err);
+            }
+        };
+
         fetchBreeds();
+        fetchVaccinations();
     }, []);
 
     const handleChange = (e) => {
@@ -103,6 +118,7 @@ const AddPetForm = ({ onSuccess }) => {
                 birthdate: '',
                 weight: '',
                 gender: '',
+                vaccinations: {},
                 image: null,
                 imageFile: null,
             });
@@ -112,9 +128,10 @@ const AddPetForm = ({ onSuccess }) => {
         }
     };
 
+    const dynamicPadding = Object.keys(errors).length > 0 ? '20rem' : '15rem';
+    
     return (
-        <div className={formStyles.pageContainer} style={{ padding: '15rem 0' }}>
-            <div className={formStyles.box}>
+        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>            <div className={formStyles.box}>
                 <h1 className={formStyles.title}>Add Pet</h1>
                 <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>
@@ -127,7 +144,11 @@ const AddPetForm = ({ onSuccess }) => {
                         handleBreedChange={handleBreedChange}
                         handleImageChange={handleImageChange}
                     />
-
+                    <VaccinationsChecklist
+                        vaccinationOptions={vaccinationOptions}
+                        petData={petData}
+                        handleChange={handleChange}
+                    />
                     {/* Submit Button */}
                     <SubmitButton type="submit">Add Pet</SubmitButton>
                 </form>

@@ -63,9 +63,10 @@ export const addVaccinationRecordToPet = async (petId, vaccinationId, date) => {
 
 
 export const updatePet = async (pet) => {
+    console.log("Pet: " + pet);
     try {
         const formattedData = {
-            petId: pet,is,
+            id: pet.id, 
             name: pet.name,
             breedId: parseInt(pet.breedId),
             gender: pet.gender.toUpperCase(),

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Form.module.css'; // Adjust the path as needed
-import SubmitButton from './SubmitButton'; // Adjust the path as necessary
+import styles from '../Form.module.css'; // Adjust the path as needed
+import SubmitButton from '../SubmitButton'; // Adjust the path as necessary
 
 function SignupForm() {
     return (

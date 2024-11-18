@@ -10,7 +10,7 @@ export const PetProvider = ({ children }) => {
   });
 
   // Save the pet to localStorage whenever it changes
-  useEffect(() => {
+  useEffect(() => {    
     if (pet) {
       localStorage.setItem('pet', JSON.stringify(pet));
     } else {

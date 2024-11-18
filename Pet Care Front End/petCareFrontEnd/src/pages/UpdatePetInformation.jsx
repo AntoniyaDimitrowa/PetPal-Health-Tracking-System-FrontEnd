@@ -1,5 +1,5 @@
 import React from 'react';
-import UpdatePet from '../components/forms/UpdatePetForm';
+import UpdatePet from '../components/forms/pet/UpdatePetForm';
 
 function UpdatePetPage() {
     const handleSuccess = () => {

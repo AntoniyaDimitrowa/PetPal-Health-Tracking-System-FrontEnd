@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { calculateVaccinationOptions, getVaccinations } from '../../services/VaccinationsService';
-import { addVaccinationRecordToPet } from '../../services/PetService';
-import styles from './Form.module.css';
+import { calculateVaccinationOptions, getVaccinations } from '../../../services/VaccinationsService';
+import { addVaccinationRecordToPet } from '../../../services/PetService';
+import { usePet } from '../../../context/PetContext';
+import styles from '../Form.module.css';
 import vacStyles from './AddVaccinationForm.module.css';
-import customStyles from './CustomStyles';
+import customStyles from '../CustomStyles';
 
-const AddVaccinationForm = ({ newVaccine, setNewVaccine, pet, handleAddVaccination }) => {
+const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination }) => {
   const [vaccinationOptions, setVaccinationOptions] = useState([]);
   const [isLoadingVaccines, setIsLoadingVaccines] = useState(true);
+  const { pet , setPet } = usePet();
 
   // Fetch vaccination options and update state
   const fetchVaccinationOptions = async () => {
@@ -46,20 +48,21 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, pet, handleAddVaccinati
       return;
     }
 
-    const newRecord = {
-      vaccination: {
-        name: vaccination.name,
-        type: vaccination.type,
-      },
-      date: newVaccine.date,
-    };
-
     try {
-      await addVaccinationRecordToPet(pet.id, selectedVaccine.value, newVaccine.date);
+      const data = await addVaccinationRecordToPet(pet.id, selectedVaccine.value, newVaccine.date);
       
       // Reset the form fields
       setNewVaccine({ vaccineId: '', type: '', date: '' });
       
+      const newRecord = {
+        id: data.id,
+        vaccination: {
+          id: vaccination.id,
+          name: vaccination.name,
+          type: vaccination.type,
+        },
+        date: newVaccine.date,
+      };
       handleAddVaccination(newRecord);
 
       // Recalculate options only if the added vaccine type is "FOR_PUPPY"

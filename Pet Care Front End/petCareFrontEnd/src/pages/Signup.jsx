@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../components/forms/Form.module.css";
-import SignupForm from "../components/forms/SignupForm"; 
+import SignupForm from "../components/forms/account/SignupForm"; 
 import { Link } from 'react-router-dom';
 
 function Signup() {

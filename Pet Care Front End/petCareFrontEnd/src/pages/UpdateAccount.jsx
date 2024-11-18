@@ -1,6 +1,5 @@
 import React from 'react';
-import UpdateAccount from '../components/forms/UpdateAccountForm';
-import { useParams } from 'react-router-dom';
+import UpdateAccount from '../components/forms/account/UpdateAccountForm';
 
 function UpdateAccountPage() {
     const userId = '2'; //When I have Login this should be changed to the loged in userId

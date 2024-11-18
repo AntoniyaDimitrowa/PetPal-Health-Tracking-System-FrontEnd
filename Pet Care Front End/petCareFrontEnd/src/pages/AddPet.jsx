@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AddPet from '../components/forms/AddPetForm';
+import AddPet from '../components/forms/pet/AddPetForm';
 import SuccessMessage from '../components/messages/SuccessMessage';
 
 function AddPetPage() {

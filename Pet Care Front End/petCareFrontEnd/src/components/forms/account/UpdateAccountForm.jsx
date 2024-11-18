@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getAccount, updateAccount } from '../../services/UserAccountService';  
-import formStyles from './Form.module.css';
-import ImageUpload from './ImageUpload';
-import SubmitButton from './SubmitButton';
+import { getAccount, updateAccount } from '../../../services/UserAccountService';  
+import formStyles from '../Form.module.css';
+import ImageUpload from '../ImageUpload';
+import SubmitButton from '../SubmitButton';
 
 const UpdateAccount = ({ userId, onSuccess }) => {
     const [accountData, setAccountData] = useState({

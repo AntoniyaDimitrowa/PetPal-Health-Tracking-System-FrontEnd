@@ -10,8 +10,8 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    align-self: flex-start; 
-    margin-left: auto; 
+    margin-left: auto;
+    display: block; 
 }
 
 .editButton img {

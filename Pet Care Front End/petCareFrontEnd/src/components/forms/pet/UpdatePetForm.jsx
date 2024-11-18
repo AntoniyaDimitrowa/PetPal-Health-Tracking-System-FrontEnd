@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import formStyles from './Form.module.css';
+import formStyles from '../Form.module.css';
 import PetInputFields from './PetInputFields';
-import SubmitButton from './SubmitButton';
-import { getBreeds } from '../../services/BreedsService';
-import { updatePet } from '../../services/PetService'; // Uncomment the service to update pet data
-import { usePet } from '../../context/PetContext';
-import ErrorMessage from '../messages/ErrorMessge';
+import SubmitButton from '../SubmitButton';
+import { getBreeds } from '../../../services/BreedsService';
+import { updatePet } from '../../../services/PetService'; // Uncomment the service to update pet data
+import { usePet } from '../../../context/PetContext';
+import ErrorMessage from '../../messages/ErrorMessge';
 
 const UpdatePetForm = ({ onSuccess }) => {
     const { pet, setPet } = usePet(); // Access the selected pet from context
+    console.log(pet);
     const [petData, setPetData] = useState({
         id: '',
         name: '',
@@ -27,19 +28,23 @@ const UpdatePetForm = ({ onSuccess }) => {
 
     // Fetch breeds and populate the form when pet context is updated
     useEffect(() => {
+        console.log(pet);
+        
         if (pet) {
             setPetData({ 
                 id: pet.id,
                 name: pet.name,
-                breedId: pet.breedId,
+                breedId: pet.breed.id,
                 birthdate: pet.birthdate,
                 weight: pet.weight,
                 gender: pet.gender,
-                image: pet.image || '',         // Set image URL if available
+                image: `data:image/jpeg;base64,${pet.image}` || '',         // Set image URL if available
                 imageFile: null,                // Initially no new file selected
             });
             setIsLoadingPetData(false); // Data is loaded, set loading state to false
         }
+
+        console.log(petData);
 
         const fetchBreeds = async () => {
             try {
@@ -85,12 +90,16 @@ const UpdatePetForm = ({ onSuccess }) => {
                 updatedPetData.image = base64Image; // Store base64-encoded image
             } catch (error) {
                 console.error("Error converting image to base64:", error);
+                setErrors({ submit: 'Failed to process the image. Please try again.' });
                 return;
             }
+        } else {
+            // Retain the existing image if no new file is uploaded
+            updatedPetData.image = pet.image; // Use the existing image from the context
         }
 
         try {
-            await updatePet(petData.id, updatedPetData); // Send updated pet data to the server
+            await updatePet(updatedPetData); // Send updated pet data to the server
             setErrors({});
             if (onSuccess) onSuccess();
             setPetData({
