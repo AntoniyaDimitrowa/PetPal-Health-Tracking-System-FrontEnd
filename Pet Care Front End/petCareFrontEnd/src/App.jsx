@@ -12,6 +12,7 @@ import AddPet from './pages/AddPet';
 import UpdatePet from './pages/UpdatePetInformation';
 import PetVaccines from './pages/PetVaccines';
 import UpdateAccountPage from './pages/UpdateAccount';
+import DailyUpdate from './pages/DailyUpdate';
 import { PetProvider } from './context/PetContext'; 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/account' element={<Account />} />
           <Route path='/account/edit' element={<UpdateAccountPage />} />
           <Route path='/pet/vaccines' element={<PetVaccines />} />
+          <Route path='/dailyUpdate' element={<DailyUpdate />} />
         </Routes>
         <Footer />
       </Router>
