@@ -6,8 +6,9 @@ import { getBreeds } from '../../../services/BreedsService';
 import { updatePet } from '../../../services/PetService'; // Uncomment the service to update pet data
 import { usePet } from '../../../context/PetContext';
 import ErrorMessage from '../../messages/ErrorMessge';
+import SuccessMessage from '../../messages/SuccessMessage';
 
-const UpdatePetForm = ({ onSuccess }) => {
+const UpdatePetForm = () => {
     const { pet, setPet } = usePet(); // Access the selected pet from context
     console.log(pet);
     const [petData, setPetData] = useState({
@@ -25,11 +26,10 @@ const UpdatePetForm = ({ onSuccess }) => {
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
     const [errors, setErrors] = useState({});
     const [isLoadingPetData, setIsLoadingPetData] = useState(true); // Flag for pet data loading
+    const [successMessage, setSuccessMessage] = useState('');
 
     // Fetch breeds and populate the form when pet context is updated
-    useEffect(() => {
-        console.log(pet);
-        
+    useEffect(() => {        
         if (pet) {
             setPetData({ 
                 id: pet.id,
@@ -43,8 +43,6 @@ const UpdatePetForm = ({ onSuccess }) => {
             });
             setIsLoadingPetData(false); // Data is loaded, set loading state to false
         }
-
-        console.log(petData);
 
         const fetchBreeds = async () => {
             try {
@@ -99,24 +97,21 @@ const UpdatePetForm = ({ onSuccess }) => {
         }
 
         try {
-            await updatePet(updatedPetData); // Send updated pet data to the server
+            const message = await updatePet(updatedPetData); // Send updated pet data to the server
+            setSuccessMessage(message);
             setErrors({});
-            if (onSuccess) onSuccess();
-            setPetData({
-                id: '',
-                name: '',
-                breedId: '',
-                birthdate: '',
-                weight: '',
-                gender: '',
-                image: '',
-                imageFile: null,
-            });
         } catch (error) {
             console.error('Error updating pet:', error);
             setErrors({ submit: 'Failed to update pet. Please try again later.' });
         }
     };
+
+    useEffect(() => {
+        if (successMessage) {
+            const timer = setTimeout(() => setSuccessMessage(''), 3000);
+            return () => clearTimeout(timer); // Cleanup the timeout on unmount
+        }
+    }, [successMessage]);
 
     // Convert image file to base64 (helper function)
     const convertFileToBase64 = (file) => {
@@ -135,6 +130,7 @@ const UpdatePetForm = ({ onSuccess }) => {
 
     return (
         <div className={formStyles.pageContainer}>
+            <SuccessMessage message={successMessage}/>
             <div className={formStyles.box}>
                 <h1 className={formStyles.title}>Update Pet</h1>
                 <ErrorMessage errors={errors} />

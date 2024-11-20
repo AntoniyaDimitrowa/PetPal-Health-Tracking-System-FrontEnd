@@ -35,7 +35,7 @@ const DailyUpdateForm = ({ pet }) => {
     };
 
     return (
-        <div className={formStyles.pageContainer}>
+        <div className={formStyles.pageContainer} style={{ padding: `10rem 0` }}>
             <div className={formStyles.box}>
                 <h1 className={formStyles.title}>Daily Update</h1>
                 <form onSubmit={handleSubmit}>
@@ -63,6 +63,7 @@ const DailyUpdateForm = ({ pet }) => {
                         </div>
                     </div>
 
+                    <br />
                     <MoodSelector selectedMood={mood} onMoodChange={setMood} />
                     <ActivityLevelSlider activityLevel={activityLevel} onActivityChange={setActivityLevel} />
                     <br />

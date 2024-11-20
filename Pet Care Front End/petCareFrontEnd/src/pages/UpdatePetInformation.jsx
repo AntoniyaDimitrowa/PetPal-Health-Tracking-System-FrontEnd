@@ -2,13 +2,9 @@ import React from 'react';
 import UpdatePet from '../components/forms/pet/UpdatePetForm';
 
 function UpdatePetPage() {
-    const handleSuccess = () => {
-        alert('Pet has been successfully updated!');
-    };
-
     return (
         <div>
-            <UpdatePet onSuccess={handleSuccess} />
+            <UpdatePet />
         </div>
     );
 }
