@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ImageUpload.module.css';
 
-function ImageUpload({ petData, handleImageChange }) {
+function ImageUpload({ data, handleImageChange }) {
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -12,11 +12,11 @@ function ImageUpload({ petData, handleImageChange }) {
     return (
         <div className={styles.imageUploadGroup}>
             <label htmlFor="imageUpload">
-                {petData.image ? (
-                    <img src={petData.image} alt="Profile" className={styles.petImage} />
+                {data.image ? (
+                    <img src={data.image} alt="Profile" className={styles.image} />
                 ) : (
                     <div className={styles.uploadPlaceholder}>
-                        <img src="/src/assets/upload-icon.png" alt="Upload Icon" />
+                        <img src="/src/assets/upload-photo.jpg" alt="Upload Photo" />
                     </div>
                 )}
             </label>

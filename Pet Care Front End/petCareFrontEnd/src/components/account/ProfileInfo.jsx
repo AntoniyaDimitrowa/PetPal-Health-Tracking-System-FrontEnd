@@ -5,7 +5,7 @@ function ProfileInfo({ account }) {
     return (
         <div className={styles.profileDetails}>
             <div className={styles.profileAvatar}>
-                <img src={`data:image/jpeg;base64,${account.image}` || "/src/assets/profile-image-default.png"} alt="User Avatar" />
+                <img src={account.image ? `data:image/jpeg;base64,${account.image}` : "/src/assets/profile-photo.png"} alt="User Avatar" />
             </div>
             <div className={styles.profileInfo}>
                 <p><strong>Full name:</strong> {account.name}</p>

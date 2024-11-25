@@ -102,7 +102,7 @@ const UpdatePetForm = () => {
             setErrors({});
         } catch (error) {
             console.error('Error updating pet:', error);
-            setErrors({ submit: 'Failed to update pet. Please try again later.' });
+            setErrors({ submit: 'Failed to update pet. Please try again later. Error updating pet:'+ error });
         }
     };
 
@@ -131,7 +131,7 @@ const UpdatePetForm = () => {
     return (
         <div className={formStyles.pageContainer}>
             <SuccessMessage message={successMessage}/>
-            <div className={formStyles.box}>
+            <div className={formStyles.box}>    
                 <h1 className={formStyles.title}>Update Pet</h1>
                 <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>

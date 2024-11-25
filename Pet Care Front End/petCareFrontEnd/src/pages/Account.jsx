@@ -5,12 +5,11 @@ import styles from "../components/account/Account.module.css";
 import { Link } from "react-router-dom";
 import ProfileCard from '../components/account/ProfileCard';
 import PetCard from '../components/account/PetCard';
+import TokenManager from '../services/TokenManager';
 
 export default function Account() {
   const [account, setAccount] = useState(null); 
-  const navigate = useNavigate();
-  const id = 2; //When I have Login this should be changed to the loged in userId
-
+  const id = TokenManager.getClaims()?.userId; 
   useEffect(() => {
     const fetchAccount = async () => {
       const accountData = await getAccount(id); 

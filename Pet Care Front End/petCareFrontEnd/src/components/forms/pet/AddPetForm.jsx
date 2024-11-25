@@ -8,8 +8,11 @@ import { validatePetForm } from '../../../validations/PetValidation';
 import ErrorMessage from '../../messages/ErrorMessge';
 import { getVaccinationsForPuppy } from '../../../services/VaccinationsService';
 import VaccinationsChecklist from './VaccinationsChecklist';
+import TokenManager from '../../../services/TokenManager';
 
 const AddPetForm = ({ onSuccess }) => {
+    const userId = TokenManager.getClaims()?.userId;
+    
     const [petData, setPetData] = useState({
         name: '',
         breedId: '',
@@ -19,7 +22,7 @@ const AddPetForm = ({ onSuccess }) => {
         vaccinations: {},
         image: null,         // Image preview URL
         imageFile: null,     // Image file object
-        userId: 2
+        userId: userId || ''
     });
 
     const [breedOptions, setBreedOptions] = useState([]);
@@ -100,7 +103,7 @@ const AddPetForm = ({ onSuccess }) => {
             }
         }
 
-        const { errors } = validatePetForm(petData);
+        const { errors } = validatePetForm(petData, vaccinationOptions);
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
             return;

@@ -9,14 +9,16 @@ const UpdateAccount = ({ userId, onSuccess }) => {
         name: '',
         email: '',
         address: '',
+        oldPassword: '',
         password: '',
         confirmPassword: '',
         image: null,          // For image preview
-        imageFile: null,       // For storing the file object
+        imageFile: null,      // For storing the file object
     });
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isChangePassword, setIsChangePassword] = useState(false); // State for tracking the checkbox
 
     useEffect(() => {
         const fetchAccount = async () => {
@@ -24,8 +26,8 @@ const UpdateAccount = ({ userId, onSuccess }) => {
             if (data) {
                 setAccountData({
                     ...data,
-                    image: `data:image/jpeg;base64,${data.image}`, // Use base64 string from backend for preview
-                    password: '',
+                    image: data.image ? `data:image/jpeg;base64,${data.image}` : '', // Use base64 string from backend for preview
+                    password: '', // Reset passwords on load
                     confirmPassword: '',
                 });
             }
@@ -51,6 +53,10 @@ const UpdateAccount = ({ userId, onSuccess }) => {
         }));
     };
 
+    const handleCheckboxChange = (e) => {
+        setIsChangePassword(e.target.checked); // Toggle checkbox state
+    };
+
     const convertFileToBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -62,17 +68,34 @@ const UpdateAccount = ({ userId, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (accountData.password !== accountData.confirmPassword) {
-            setError("Passwords do not match");
-            return;
+
+        // If password change is requested, validate that passwords match
+        if (isChangePassword) {
+            if (accountData.password !== accountData.confirmPassword) {
+                setError("Passwords do not match");
+                return;
+            }
+            if (!accountData.password || !accountData.confirmPassword || !accountData.oldPassword) {
+                setError("Please fill in all password fields");
+                return;
+            }
         }
 
         const payload = {
             name: accountData.name,
             email: accountData.email,
             address: accountData.address,
-            password: accountData.password,
         };
+
+        // Include the old password for validation
+        if (isChangePassword && accountData.oldPassword) {
+            payload.oldPassword = accountData.oldPassword;
+        }
+
+        // Only include the new password if the change password checkbox is checked
+        if (isChangePassword && accountData.password) {
+            payload.password = accountData.password;
+        }
 
         // Convert to base64 if there is an image file
         if (accountData.imageFile) {
@@ -91,6 +114,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
             if (onSuccess) onSuccess();
         } catch (error) {
             console.error("Error updating account:", error);
+            setError("Failed to update account. Please try again later.");
         }
     };
 
@@ -105,7 +129,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                 {error && <p className={formStyles.error}>{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className={formStyles.photoPlusInputs}>
-                        <ImageUpload petData={accountData} handleImageChange={handleImageChange} />
+                        <ImageUpload data={accountData} handleImageChange={handleImageChange} />
                         <div>
                             <div className={formStyles.inputGroup}>
                                 <label htmlFor="name" className={formStyles.label}>Name:</label>
@@ -142,28 +166,61 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Checkbox for changing password */}
                     <div className={formStyles.inputGroup}>
-                        <label htmlFor="password" className={formStyles.label}>Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={accountData.password}
-                            onChange={handleChange}
-                            className={formStyles.inputField}
-                        />
+                        <label className={formStyles.label}>
+                            <input
+                                type="checkbox"
+                                checked={isChangePassword}
+                                onChange={handleCheckboxChange}
+                            />
+                            Change Password
+                        </label>
                     </div>
-                    <div className={formStyles.inputGroup}>
-                        <label htmlFor="confirmPassword" className={formStyles.label}>Confirm Password:</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            value={accountData.confirmPassword}
-                            onChange={handleChange}
-                            className={formStyles.inputField}
-                        />
-                    </div>
+
+                    {/* Password fields (conditionally displayed) */}
+                    {isChangePassword && (
+                        <>
+                            <div className={formStyles.inputGroup}>
+                                <label htmlFor="oldPassword" className={formStyles.label}>Old Password:</label>
+                                <input
+                                    type="password"
+                                    id="oldPassword"
+                                    name="oldPassword"
+                                    value={accountData.oldPassword}
+                                    onChange={handleChange}
+                                    className={formStyles.inputField}
+                                    required={isChangePassword}
+                                />
+                            </div>
+                            <div className={formStyles.inputGroup}>
+                                <label htmlFor="password" className={formStyles.label}>New Password:</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={accountData.password}
+                                    onChange={handleChange}
+                                    className={formStyles.inputField}
+                                    required={isChangePassword}
+                                />
+                            </div>
+                            <div className={formStyles.inputGroup}>
+                                <label htmlFor="confirmPassword" className={formStyles.label}>Confirm New Password:</label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    value={accountData.confirmPassword}
+                                    onChange={handleChange}
+                                    className={formStyles.inputField}
+                                    required={isChangePassword}
+                                />
+                            </div>
+                        </>
+                    )}
+
                     <SubmitButton type="submit">Save</SubmitButton>
                 </form>
             </div>

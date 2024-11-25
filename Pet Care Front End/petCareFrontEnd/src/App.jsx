@@ -13,28 +13,32 @@ import UpdatePet from './pages/UpdatePetInformation';
 import PetVaccines from './pages/PetVaccines';
 import UpdateAccountPage from './pages/UpdateAccount';
 import DailyUpdate from './pages/DailyUpdate';
-import { PetProvider } from './context/PetContext'; 
+import { PetProvider } from './context/PetContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <PetProvider> 
-      <Router>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/breeds' element={<Breeds />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/addPet' element={<AddPet />} />
-          <Route path='/updatePet' element={<UpdatePet />} />
-          <Route path='/account' element={<Account />} />
-          <Route path='/account/edit' element={<UpdateAccountPage />} />
-          <Route path='/pet/vaccines' element={<PetVaccines />} />
-          <Route path='/dailyUpdate' element={<DailyUpdate />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </PetProvider>
+    <AuthProvider>
+      <PetProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/breeds' element={<Breeds />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/addPet' element={<AddPet />} />
+            <Route path='/updatePet' element={<UpdatePet />} />
+            <Route path='/account' element={<Account />} />
+            <Route path='/account/edit' element={<UpdateAccountPage />} />
+            <Route path='/pet/vaccines' element={<PetVaccines />} />
+            <Route path='/dailyUpdate' element={<DailyUpdate />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </PetProvider>
+    </AuthProvider>
+
   );
 }
 

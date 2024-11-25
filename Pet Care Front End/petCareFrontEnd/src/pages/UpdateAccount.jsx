@@ -1,8 +1,9 @@
 import React from 'react';
 import UpdateAccount from '../components/forms/account/UpdateAccountForm';
+import TokenManager from '../services/TokenManager';
 
 function UpdateAccountPage() {
-    const userId = '2'; //When I have Login this should be changed to the loged in userId
+    const userId = TokenManager.getClaims()?.userId; 
 
     const handleSuccess = () => {
         alert('Account information has been successfully updated!');

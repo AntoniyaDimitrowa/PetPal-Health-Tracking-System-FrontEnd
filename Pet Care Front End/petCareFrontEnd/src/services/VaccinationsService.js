@@ -1,8 +1,18 @@
 import axios from "axios";
 import { baseURL } from "../config.js";
+import TokenManager from "./TokenManager.jsx";
 
 export const getVaccinations = async () => {
-  let response = await axios.get(baseURL + `/vaccinations`);
+  const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
+  if (!token) {
+    throw new Error("Token is missing");
+  }
+  let response = await axios.get(baseURL + `/vaccinations`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
   if (response) {
     return response.data;
   }
@@ -12,7 +22,16 @@ export const getVaccinations = async () => {
 }
 
 export const getVaccinationsForPuppy = async () => {
-  let response = await axios.get(baseURL + `/vaccinations`);
+  const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
+  if (!token) {
+    throw new Error("Token is missing");
+  }
+  let response = await axios.get(baseURL + `/vaccinations`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
   if (response) {
     // Filter vaccinations by type "ForPuppy"
     const filteredVaccinations = response.data.filter(vaccination => vaccination.type === "FOR_PUPPY");
@@ -28,8 +47,8 @@ export const calculateVaccinationOptions = async (pet) => {
   const vaccinationRecords = pet.vaccinationRecords || [];
 
   const administeredVaccineIds = vaccinationRecords.map(record => record.vaccination?.id);
-  
-  const vaccinationOptions = allVaccinations.filter(vaccine => {    
+
+  const vaccinationOptions = allVaccinations.filter(vaccine => {
     if (vaccine.type === "FOR_PUPPY") {
       return !administeredVaccineIds.includes(vaccine.id);
     } else if (vaccine.type === "FOR_ADULT") {
@@ -37,7 +56,7 @@ export const calculateVaccinationOptions = async (pet) => {
     }
     return false;
   });
-  
+
   return vaccinationOptions.map(vaccine => ({
     value: vaccine.id,
     label: vaccine.type === "FOR_PUPPY"
@@ -51,7 +70,7 @@ export const calculateVaccinationOptions = async (pet) => {
 export const calculateUpcomingVaccines = async (pet) => {
   const filteredVaccines = await calculateVaccinationOptions(pet);
   console.log(filteredVaccines);
-  
+
   const filteredIds = filteredVaccines.map(vaccine => {
     return vaccine.value;
   });
@@ -139,7 +158,7 @@ export const calculateUpcomingVaccines = async (pet) => {
   }
 
   console.log(upcomingVaccines);
-  
+
   // Sort by dueDate in ascending order
   upcomingVaccines.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 

@@ -1,8 +1,18 @@
 import axios from "axios";
 import {baseURL} from "../config.js";
+import TokenManager from "./TokenManager.jsx";
 
 export const getBreeds = async () => {
-    let response = await axios.get(baseURL + `/breeds`);
+    const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
+    if (!token) {
+      throw new Error("Token is missing");
+    }
+    let response = await axios.get(baseURL + `/breeds`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
     if (response)
     {
         //debugger;

@@ -3,7 +3,8 @@ import formStyles from '../../forms/Form.module.css';
 import MoodSelector from './MoodSelector';
 import ActivityLevelSlider from './ActivityLevelSlider';
 import SocialDropdown from './SocialDropdown';
-// import { saveHealthRecord } from '../../../services/PetService'; // Backend method
+import { addHealthRecordToPet } from '../../../services/PetService'; 
+import styles from '../../account/PetInfo.module.css'
 
 const DailyUpdateForm = ({ pet }) => {
     // console.log(petId);
@@ -23,10 +24,9 @@ const DailyUpdateForm = ({ pet }) => {
             activityLevel: parseInt(activityLevel, 10),
             socialInteraction,
             notes,
-            petId: pet.id,
         };
         try {
-            // await saveHealthRecord(healthRecord);
+            await addHealthRecordToPet(pet.id, healthRecord);
             alert('Health record saved successfully!');
         } catch (err) {
             console.error('Error saving health record:', err);
@@ -40,7 +40,7 @@ const DailyUpdateForm = ({ pet }) => {
                 <h1 className={formStyles.title}>Daily Update</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={formStyles.photoPlusInputs}>
-                    <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/default-pet.jpg"} alt={pet.name} style={{ width: '150px', height: '150px', borderRadius: '10px' }} />
+                    <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
                         <div>
                             <div className={formStyles.inputGroup}>
                                 <label className={formStyles.label}>Food intake (grams):</label>

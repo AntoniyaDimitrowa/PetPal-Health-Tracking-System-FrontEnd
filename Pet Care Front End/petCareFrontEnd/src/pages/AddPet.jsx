@@ -12,7 +12,7 @@ function AddPetPage() {
     };
 
     return (
-        <div>
+        <div style={{ backgroundColor: '#C3E5CC'}}>
             {successMessage && <SuccessMessage message={successMessage} />}
             <AddPet onSuccess={handleSuccess} />
         </div>

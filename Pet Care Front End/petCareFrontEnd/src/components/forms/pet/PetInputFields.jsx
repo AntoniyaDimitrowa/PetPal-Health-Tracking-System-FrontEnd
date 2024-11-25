@@ -7,7 +7,7 @@ import customStyles from '../CustomStyles';
 const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, handleBreedChange, handleImageChange }) => (
     <>
         <div className={formStyles.photoPlusInputs}>
-            <ImageUpload petData={petData} handleImageChange={handleImageChange} />
+            <ImageUpload data={petData} handleImageChange={handleImageChange} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div className={formStyles.inputGroup}>
                     <label htmlFor="name" className={formStyles.label}>Name:</label>
