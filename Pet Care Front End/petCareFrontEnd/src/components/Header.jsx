@@ -6,7 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 
 function Header() {
   const { claims, signOut } = useContext(AuthContext);
-  
+
+  console.log(claims);
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -16,11 +17,24 @@ function Header() {
         <ul>
           <li><NavLink to="/" className={({ isActive }) => isActive ? styles.active : undefined}>Home</NavLink></li>
           {claims ? (
-            <>
-              <li><a href="#health-tracking">Health Tracking</a></li>
-              <li><a href="#socialize">Socialize</a></li>
-              <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li>
-            </>
+            claims.roles.includes("Admin") ? (
+              <>
+                <li><NavLink to="/breeds" className={({ isActive }) => isActive ? styles.active : undefined}>Breeds</NavLink></li>
+                <li><NavLink to="/moods" className={({ isActive }) => isActive ? styles.active : undefined}>Moods</NavLink></li>
+              </>
+            ) : (
+              <>
+                <li><a href="#socialize">Socialize</a></li>
+                {claims.roles.includes("Owner") ? (
+                  <>
+                    <li><a href="#health-tracking">Health Tracking</a></li>
+                    <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li>
+                  </>
+                ) : (
+                  <li><a href="#vetAccount">Acount</a></li>
+                )}
+              </>
+            )
           ) : (<></>)
           }
 

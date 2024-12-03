@@ -1,0 +1,50 @@
+.pagePlusMessages {
+    display: flex;
+    flex-direction: column;
+    background-color: #C3E5CC;
+  }
+  
+  .pageContainer {
+    background-color: #C3E5CC; 
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    flex-direction: column;
+  }
+
+  .pageContent {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .leftPanel, .rightPanel {
+    background-color: #C3E5CC;
+    padding: 2rem;
+  }
+  
+  .leftPanel {
+    width: 70%;
+  }
+  .rightPanel {
+    width: 30%;
+  }
+
+  
+  .box {
+    background-color: #F7F7F7; 
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .title {
+    color: #07621d; 
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Knewave', cursive; 
+  }
+  

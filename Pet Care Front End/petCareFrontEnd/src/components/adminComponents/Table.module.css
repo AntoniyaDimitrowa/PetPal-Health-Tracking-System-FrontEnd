@@ -1,0 +1,29 @@
+.recordsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recordsTable th, .recordsTable td {
+  padding: 1rem; 
+  text-align: left; 
+  border-bottom: 1px solid #ddd;
+}
+
+.recordsTable th {
+  background-color: #f4f4f4; 
+  position: sticky; 
+  top: 0; 
+  z-index: 1; 
+}
+
+.recordsTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9; 
+}
+
+/* Scrollable Table Container */
+.tableContainer {
+  max-height: 35.5rem;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 2rem;
+}

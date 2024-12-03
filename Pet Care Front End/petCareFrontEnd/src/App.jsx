@@ -4,7 +4,6 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Breeds from './pages/Breeds';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Account from './pages/Account';
@@ -15,6 +14,8 @@ import UpdateAccountPage from './pages/UpdateAccount';
 import DailyUpdate from './pages/DailyUpdate';
 import { PetProvider } from './context/PetContext';
 import { AuthProvider } from './context/AuthContext';
+import BreedManagement from './pages/BreedManagement';
+import MoodManagement from './pages/MoodManagement';
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/breeds' element={<Breeds />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/addPet' element={<AddPet />} />
@@ -33,6 +33,8 @@ function App() {
             <Route path='/account/edit' element={<UpdateAccountPage />} />
             <Route path='/pet/vaccines' element={<PetVaccines />} />
             <Route path='/dailyUpdate' element={<DailyUpdate />} />
+            <Route path='/breeds' element={<BreedManagement />} />
+            <Route path='/moods' element={<MoodManagement />} />
           </Routes>
           <Footer />
         </Router>
