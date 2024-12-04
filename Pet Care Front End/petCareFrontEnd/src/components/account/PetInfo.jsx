@@ -13,7 +13,7 @@ function PetInfo({ pet }) {
 
   return (
     <div className={styles.petInfo}>
-      <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
+      <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/no-picture.png"} alt={pet.name} className={styles.petImage} />
       <div className={styles.petDetails}>
         <p><strong>Name:</strong> {pet.name}</p>
         <p><strong>Breed:</strong> {pet.breed.name}</p>

@@ -19,7 +19,7 @@ const SocialDropdown = ({ socialInteraction, onSocialChange }) => {
 
     return (
         <div>
-            <label className={formStyles.label}>Social Interactions:</label>
+            <label className={formStyles.label}>Social Interactions:*</label>
             <select
                 value={socialInteraction}
                 onChange={(e) => onSocialChange(e.target.value)}

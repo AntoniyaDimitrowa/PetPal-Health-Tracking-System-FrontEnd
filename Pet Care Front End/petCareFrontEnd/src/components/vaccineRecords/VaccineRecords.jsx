@@ -31,10 +31,10 @@ const VaccineRecords = () => {
 
     // Recalculate upcoming vaccines
     const recalculateUpcomingVaccines = async (pet) => {
-        
+
         try {
             const upcoming = await calculateUpcomingVaccines(pet);
-            
+
             setUpcomingVaccines(upcoming);
         } catch (error) {
             console.error('Error fetching upcoming vaccines:', error);
@@ -47,7 +47,7 @@ const VaccineRecords = () => {
             // Consolidate updates
             const updatedRecords = [...vaccinationRecords, newRecord];
             const updatedPet = { ...pet, vaccinationRecords: updatedRecords };
-            
+
             // Update the pet state
             setPet(updatedPet);
             setVaccinationRecords(updatedRecords);
@@ -84,35 +84,25 @@ const VaccineRecords = () => {
         }
     }, [errorMessages]);
 
-    // useEffect(() => {
-    //     console.log("Pet updated:", pet);
-    //     console.log("Vaccination Records updated:", vaccinationRecords);
-    //     console.log("Upcoming Vaccines updated:", upcomingVaccines);
-    // }, [pet]);
-
     return (
         <div className={styles.pagePlusMessages}>
             <SuccessMessage message={successMessage} />
             <ErrorMessage errors={errorMessages} />
-            <div className={styles.vaccineRecordsPageContainer}>
 
-                <div className={styles.leftPanel}>
-                    <div className={styles.box}>
-                        <h2 className={styles.title}>Vaccination Records</h2>
-                        <VaccineFilter filters={filters} setFilters={setFilters} />
-                        <VaccineRecordTable records={vaccinationRecords} filters={filters} />
-                    </div>
-                </div>
+            <div className={styles.flex} >
+                <AddVaccinationForm
+                    newVaccine={newVaccine}
+                    setNewVaccine={setNewVaccine}
+                    pet={pet}
+                    handleAddVaccination={handleAddVaccination}
+                />
+                <UpcomingVaccinesList upcomingVaccines={upcomingVaccines} />
+            </div>
 
-                <div className={styles.rightPanel}>
-                    <AddVaccinationForm
-                        newVaccine={newVaccine}
-                        setNewVaccine={setNewVaccine}
-                        pet={pet}
-                        handleAddVaccination={handleAddVaccination}
-                    />
-                    <UpcomingVaccinesList upcomingVaccines={upcomingVaccines} />
-                </div>
+            <div className={styles.box}>
+                <h2 className={styles.title}>Vaccination Records</h2>
+                <VaccineFilter filters={filters} setFilters={setFilters} />
+                <VaccineRecordTable records={vaccinationRecords} filters={filters} />
             </div>
         </div>
     );

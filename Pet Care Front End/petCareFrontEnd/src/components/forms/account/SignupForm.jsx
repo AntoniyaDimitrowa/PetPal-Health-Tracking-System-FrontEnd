@@ -42,7 +42,7 @@ function SignupForm() {
     return (
         <form onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
-                <label htmlFor="name" className={styles.label}>Name:</label>
+                <label htmlFor="name" className={styles.label}>Full Name:*</label>
                 <input
                     type="text"
                     id="name"
@@ -52,7 +52,7 @@ function SignupForm() {
                 />
             </div>
             <div className={styles.inputGroup}>
-                <label htmlFor="email" className={styles.label}>Email:</label>
+                <label htmlFor="email" className={styles.label}>Email:*</label>
                 <input
                     type="email"
                     id="email"
@@ -62,7 +62,7 @@ function SignupForm() {
                 />
             </div>
             <div className={styles.inputGroup}>
-                <label htmlFor="address" className={styles.label}>Address:</label>
+                <label htmlFor="address" className={styles.label}>Address:*</label>
                 <input
                     type="text"
                     id="address"
@@ -72,7 +72,7 @@ function SignupForm() {
                 />
             </div>
             <div className={styles.inputGroup}>
-                <label htmlFor="password" className={styles.label}>Password:</label>
+                <label htmlFor="password" className={styles.label}>Password:*</label>
                 <input
                     type="password"
                     id="password"
@@ -82,7 +82,7 @@ function SignupForm() {
                 />
             </div>
             <div className={styles.inputGroup}>
-                <label htmlFor="repeatPassword" className={styles.label}>Confirm Password:</label>
+                <label htmlFor="repeatPassword" className={styles.label}>Confirm Password:*</label>
                 <input
                     type="password"
                     id="repeatPassword"

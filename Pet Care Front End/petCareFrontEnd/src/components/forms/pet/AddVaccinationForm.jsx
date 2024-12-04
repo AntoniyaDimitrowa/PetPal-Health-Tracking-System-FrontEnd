@@ -87,7 +87,7 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination })
       <form onSubmit={handleFormSubmit}>
         <div className={styles.inputGroup}>
           <label className={styles.label} htmlFor="vaccineId">
-            Vaccine Name:
+            Vaccine Name:*
           </label>
           <Select
             id="vaccineId"
@@ -105,7 +105,7 @@ const AddVaccinationForm = ({ newVaccine, setNewVaccine, handleAddVaccination })
 
         <div className={styles.inputGroup}>
           <label className={styles.label} htmlFor="date">
-            Date:
+            Date:*
           </label>
           <input
             id="date"

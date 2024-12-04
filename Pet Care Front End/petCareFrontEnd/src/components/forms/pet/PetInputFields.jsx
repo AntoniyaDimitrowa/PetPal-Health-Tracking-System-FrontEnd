@@ -10,7 +10,7 @@ const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, 
             <ImageUpload data={petData} handleImageChange={handleImageChange} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div className={formStyles.inputGroup}>
-                    <label htmlFor="name" className={formStyles.label}>Name:</label>
+                    <label htmlFor="name" className={formStyles.label}>Name:*</label>
                     <input
                         type="text"
                         id="name"
@@ -22,7 +22,7 @@ const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, 
                 </div>
 
                 <div className={formStyles.inputGroup}>
-                    <label htmlFor="breed" className={formStyles.label}>Breed:</label>
+                    <label htmlFor="breed" className={formStyles.label}>Breed:*</label>
                     <Select
                         id="breed"
                         name="breed"
@@ -38,7 +38,7 @@ const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, 
                 </div>
 
                 <div className={formStyles.inputGroup}>
-                    <label htmlFor="birthdate" className={formStyles.label}>Birthdate:</label>
+                    <label htmlFor="birthdate" className={formStyles.label}>Birthdate:*</label>
                     <input
                         type="date"
                         id="birthdate"
@@ -51,7 +51,7 @@ const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, 
             </div>
         </div>
         <div className={formStyles.inputGroup}>
-            <label htmlFor="weight" className={formStyles.label}>Weight (kg):</label>
+            <label htmlFor="weight" className={formStyles.label}>Weight (kg):*</label>
             <input
                 type="number"
                 min={0.05}
@@ -65,7 +65,7 @@ const PetInputFields = ({ petData, breedOptions, isLoadingBreeds, handleChange, 
         </div>
 
         <div className={formStyles.inputGroup}>
-            <label htmlFor="gender" className={formStyles.label}>Gender:</label>
+            <label htmlFor="gender" className={formStyles.label}>Gender:*</label>
             <select
                 id="gender"
                 name="gender"

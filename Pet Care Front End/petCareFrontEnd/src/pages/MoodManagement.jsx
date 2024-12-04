@@ -14,11 +14,11 @@ const MoodManagement = () => {
         <div className={gridStyle.pageContainer}>
             <h1 className={gridStyle.title}>Mood Management</h1>
             <div className={gridStyle.pageContent}>
+                <AddMoodForm onMoodAdded={handleMoodAdded} className={gridStyle.rightPanel} />
                 <div className={`${gridStyle.box} ${gridStyle.leftPanel}`}>
                     <h1 className={gridStyle.title}>Moods</h1>
                     <MoodList key={refresh} />
                 </div>
-                <AddMoodForm onMoodAdded={handleMoodAdded} className={gridStyle.rightPanel} />
             </div>
         </div>
     );

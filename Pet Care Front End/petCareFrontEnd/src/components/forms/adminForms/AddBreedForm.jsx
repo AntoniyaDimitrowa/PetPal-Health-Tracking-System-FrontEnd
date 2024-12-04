@@ -45,7 +45,7 @@ const AddBreedForm = ({ onBreedAdded }) => {
         <form onSubmit={handleSubmit} className={formStyles.box}>
             <h2 className={formStyles.title}>Add New Breed</h2>
             <div className={formStyles.inputGroup}>
-                <label className={formStyles.label}>Name:</label>
+                <label className={formStyles.label}>Name:*</label>
                 <input
                     type="text"
                     className={formStyles.inputField}
@@ -56,7 +56,7 @@ const AddBreedForm = ({ onBreedAdded }) => {
             </div>
 
             <div className={formStyles.inputGroup}>
-                <label className={formStyles.label}>Description:</label>
+                <label className={formStyles.label}>Description:*</label>
                 <textarea
                     className={formStyles.inputField}
                     value={breed.description}
@@ -71,7 +71,7 @@ const AddBreedForm = ({ onBreedAdded }) => {
             />
 
             <div className={formStyles.inputGroup}>
-                <label className={formStyles.label}>Minimum Exercise Per Day (hrs):</label>
+                <label className={formStyles.label}>Minimum Exercise Per Day (hrs):*</label>
                 <input
                     type="number"
                     className={formStyles.inputField}

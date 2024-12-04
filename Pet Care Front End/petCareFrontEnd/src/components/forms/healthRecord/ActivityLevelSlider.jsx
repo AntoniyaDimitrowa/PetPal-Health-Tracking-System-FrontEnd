@@ -20,7 +20,7 @@ const ActivityLevelSlider = ({ activityLevel, onActivityChange }) => {
 
     return (
         <>
-            <label className={formStyles.label}>Activity Level:</label>
+            <label className={formStyles.label}>Activity Level:*</label>
 
             <div className={formStyles.sliderContainer}>
                 <div className={formStyles.sliderWrapper}>

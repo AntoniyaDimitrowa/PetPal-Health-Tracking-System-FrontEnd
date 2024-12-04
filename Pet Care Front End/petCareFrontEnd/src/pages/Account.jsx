@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ProfileCard from '../components/account/ProfileCard';
 import PetCard from '../components/account/PetCard';
 import TokenManager from '../services/TokenManager';
+import typographyStyles from "./Typography.module.css";
 
 export default function Account() {
   const [account, setAccount] = useState(null); 
@@ -24,7 +25,9 @@ export default function Account() {
 
   return (
     <div className={styles.accountContainer}>
+      <h1 className={typographyStyles.title}>Profile Information</h1>
       <ProfileCard account={account} />
+      <h1 className={typographyStyles.title}>My Pets</h1>
       <section className={styles.petList}>
         {account.pets.map((pet) => (
           <PetCard key={pet.id} pet={pet} />

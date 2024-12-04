@@ -132,7 +132,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                         <ImageUpload data={accountData} handleImageChange={handleImageChange} />
                         <div>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="name" className={formStyles.label}>Name:</label>
+                                <label htmlFor="name" className={formStyles.label}>Name:*</label>
                                 <input
                                     type="text"
                                     id="name"
@@ -143,7 +143,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                                 />
                             </div>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="email" className={formStyles.label}>Email:</label>
+                                <label htmlFor="email" className={formStyles.label}>Email:*</label>
                                 <input
                                     type="email"
                                     id="email"
@@ -154,7 +154,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                                 />
                             </div>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="address" className={formStyles.label}>Address:</label>
+                                <label htmlFor="address" className={formStyles.label}>Address:*</label>
                                 <input
                                     type="text"
                                     id="address"
@@ -183,7 +183,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                     {isChangePassword && (
                         <>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="oldPassword" className={formStyles.label}>Old Password:</label>
+                                <label htmlFor="oldPassword" className={formStyles.label}>Old Password:*</label>
                                 <input
                                     type="password"
                                     id="oldPassword"
@@ -195,7 +195,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                                 />
                             </div>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="password" className={formStyles.label}>New Password:</label>
+                                <label htmlFor="password" className={formStyles.label}>New Password:*</label>
                                 <input
                                     type="password"
                                     id="password"
@@ -207,7 +207,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                                 />
                             </div>
                             <div className={formStyles.inputGroup}>
-                                <label htmlFor="confirmPassword" className={formStyles.label}>Confirm New Password:</label>
+                                <label htmlFor="confirmPassword" className={formStyles.label}>Confirm New Password:*</label>
                                 <input
                                     type="password"
                                     id="confirmPassword"

@@ -28,7 +28,7 @@ const MoodSelector = ({ selectedMood, onMoodChange }) => {
 
     return (
         <div>
-            <label className={formStyles.label}>Mood:</label>
+            <label className={formStyles.label}>Mood:*</label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {moods.map((mood) => (
                     <button

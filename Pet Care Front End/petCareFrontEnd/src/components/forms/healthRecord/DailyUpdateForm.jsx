@@ -43,7 +43,7 @@ const DailyUpdateForm = ({ pet }) => {
                     <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
                         <div>
                             <div className={formStyles.inputGroup}>
-                                <label className={formStyles.label}>Food intake (grams):</label>
+                                <label className={formStyles.label}>Food intake (grams):*</label>
                                 <input
                                     type="number"
                                     value={foodIntake}
@@ -52,7 +52,7 @@ const DailyUpdateForm = ({ pet }) => {
                                 />
                             </div>
                             <div className={formStyles.inputGroup}>
-                                <label className={formStyles.label}>Water intake (ml):</label>
+                                <label className={formStyles.label}>Water intake (ml):*</label>
                                 <input
                                     type="number"
                                     value={waterIntake}
