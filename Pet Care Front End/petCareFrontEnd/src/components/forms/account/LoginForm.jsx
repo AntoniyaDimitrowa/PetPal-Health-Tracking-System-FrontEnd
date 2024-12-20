@@ -28,7 +28,7 @@ function LoginForm() {
         AuthenticationService.login(email, password)
         .then(() => {
             signIn(TokenManager.getAccessToken());
-            navigate('/'); 
+            navigate('/account'); 
         })
         .catch((e) => {
             alert("Login failed. Please try again. "  + e);

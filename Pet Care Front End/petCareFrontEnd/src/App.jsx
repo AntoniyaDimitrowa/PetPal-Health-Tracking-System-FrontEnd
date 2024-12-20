@@ -16,6 +16,7 @@ import { PetProvider } from './context/PetContext';
 import { AuthProvider } from './context/AuthContext';
 import BreedManagement from './pages/BreedManagement';
 import MoodManagement from './pages/MoodManagement';
+import AddBreedHealthInfoPage from './pages/AddBreedHealthInfo';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path='/dailyUpdate' element={<DailyUpdate />} />
             <Route path='/breeds' element={<BreedManagement />} />
             <Route path='/moods' element={<MoodManagement />} />
+            <Route path='/addBreedHealthInfo' element={<AddBreedHealthInfoPage />} />
           </Routes>
           <Footer />
         </Router>

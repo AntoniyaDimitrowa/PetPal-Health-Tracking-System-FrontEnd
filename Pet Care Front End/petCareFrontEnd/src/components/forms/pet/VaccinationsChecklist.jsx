@@ -54,6 +54,7 @@ function VaccinationsChecklist({ vaccinationOptions, petData, handleChange }) {
                                     name={vaccine.id}
                                     checked={petData.vaccinations[vaccine.id] || false}
                                     onChange={handleChange}
+                                    data-cy={`vaccination-checkbox-${vaccine.id}`}
                                 />
                                 {vaccine.name} ({vaccine.range} weeks)
                             </label>

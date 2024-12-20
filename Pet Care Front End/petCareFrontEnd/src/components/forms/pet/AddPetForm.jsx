@@ -134,7 +134,8 @@ const AddPetForm = ({ onSuccess }) => {
     const dynamicPadding = Object.keys(errors).length > 0 ? '20rem' : '15rem';
     
     return (
-        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>            <div className={formStyles.box}>
+        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>            
+        <div className={formStyles.box}>
                 <h1 className={formStyles.title}>Add Pet</h1>
                 <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>

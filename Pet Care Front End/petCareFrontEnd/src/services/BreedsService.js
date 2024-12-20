@@ -50,3 +50,33 @@ export const createBreed = async (breedData) => {
       throw error; // Let the caller handle the error
   }
 };
+
+export const createBreedHealthInfo = async (breedHealthInfoData) => {
+    try {
+        const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
+        if (!token) {
+            throw new Error("Token is missing");
+        }
+
+        console.log("Request Headers:", {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        });
+        const response = await axios.post(`${baseURL}/health/breeds/${breedHealthInfoData.breedId}/health`, breedHealthInfoData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response && response.status === 201) {
+            console.log("Breed Health Info created successfully:", response.data);
+            return response.data; // Return created data if needed
+        } else {
+            throw new Error("Unexpected response status: " + response.status);
+        }
+    } catch (error) {
+        console.error("Error creating Breed Health Info:", error);
+        throw error; // Let the caller handle the error
+    }
+};

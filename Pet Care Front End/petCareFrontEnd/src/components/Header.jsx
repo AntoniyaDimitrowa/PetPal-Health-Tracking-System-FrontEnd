@@ -28,11 +28,10 @@ function Header() {
                 {claims.roles.includes("Owner") ? (
                   <>
                     <li><a href="#health-tracking">Health Tracking</a></li>
-                    <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li>
                   </>
-                ) : (
-                  <li><a href="#vetAccount">Acount</a></li>
-                )}
+                ) : (<></>)}
+                <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li>
+
               </>
             )
           ) : (<></>)

@@ -58,6 +58,9 @@
     border-color: #66BF7B; 
   }
 
+  .selectField {
+    width: 100%;
+  }
   .actionButton {
     background-color: #66BF7B; 
     color: white;

@@ -1,0 +1,19 @@
+.card {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 1.2rem;
+    color: #4caf50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .ageRange, .foodIntake, .waterIntake {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.3rem 0;
+  }

@@ -47,4 +47,10 @@
     width: 100%;
     text-align: center;
   }
+
+  .healthInfoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
   
