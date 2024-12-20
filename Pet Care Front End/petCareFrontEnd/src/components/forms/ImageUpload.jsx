@@ -28,7 +28,7 @@ function ImageUpload({ data, handleImageChange }) {
                     </div>
                 ) : (
                     <div className={styles.uploadPlaceholder}>
-                        <img src="/src/assets/upload-picture.png" alt="Upload Photo" />
+                        <img src="/assets/upload-picture.png" alt="Upload Photo" />
                     </div>
                 )}
             </label>

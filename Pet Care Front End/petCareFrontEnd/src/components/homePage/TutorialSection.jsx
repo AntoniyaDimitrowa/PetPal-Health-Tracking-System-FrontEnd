@@ -13,7 +13,7 @@ const TutorialSection = () => {
         </p>
       </div>
       <div className={styles.video}>
-        <img src="/src/assets/video-placeholder.jpg" alt="video" />
+        <img src="/assets/video-placeholder.jpg" alt="video" />
       </div>
     </section>
   );

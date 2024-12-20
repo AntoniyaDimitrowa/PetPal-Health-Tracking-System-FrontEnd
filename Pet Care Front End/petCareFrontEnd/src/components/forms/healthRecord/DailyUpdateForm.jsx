@@ -40,7 +40,7 @@ const DailyUpdateForm = ({ pet }) => {
                 <h1 className={formStyles.title}>Daily Update</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={formStyles.photoPlusInputs}>
-                    <img src={`data:image/jpeg;base64,${pet.image}` || "/src/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
+                    <img src={`data:image/jpeg;base64,${pet.image}` || "/assets/default-pet.jpg"} alt={pet.name} className={styles.petImage} />
                         <div>
                             <div className={formStyles.inputGroup}>
                                 <label className={formStyles.label}>Food intake (grams):*</label>
