@@ -27,7 +27,7 @@ function Header() {
                 <li><a href="#socialize">Socialize</a></li>
                 {claims.roles.includes("Owner") ? (
                   <>
-                    <li><a href="#health-tracking">Health Tracking</a></li>
+                    <li><NavLink to="/healthTracking" className={({ isActive }) => isActive ? styles.active : undefined}>Health Tracking</NavLink></li>
                   </>
                 ) : (<></>)}
                 <li><NavLink to="/account" className={({ isActive }) => isActive ? styles.active : undefined}>Account</NavLink></li>

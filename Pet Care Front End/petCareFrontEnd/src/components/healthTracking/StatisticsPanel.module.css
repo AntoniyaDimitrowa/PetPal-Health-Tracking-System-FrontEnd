@@ -1,0 +1,28 @@
+.wrapper {
+  text-align: center;
+  margin: 20px;
+}
+
+.statisticsRow {
+  display: flex;
+  flex-wrap: wrap; /* Allows charts to wrap if the row gets too narrow */
+  justify-content: space-between; /* Adds spacing between charts */
+  gap: 10px; /* Adds space between chart items */
+  margin-bottom: 3rem;
+}
+
+.statisticItem {
+  flex: 1 1 250px;
+  max-width: 300px; /* Ensures charts don’t exceed 300px width */
+  text-align: center; /* Centers the chart horizontally */
+  background-color: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #07621d; 
+  text-align: left;
+}

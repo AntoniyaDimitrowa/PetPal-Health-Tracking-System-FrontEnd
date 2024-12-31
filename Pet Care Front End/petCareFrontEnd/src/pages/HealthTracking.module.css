@@ -1,0 +1,80 @@
+.healthTrackingPage {
+  display: flex;
+  background-color: #c3e5cc;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.notificationsAndStatistics {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.statisticsSection {
+  flex: 3;
+  padding: 20px;
+  transition: flex 0.3s;
+}
+
+.shrink {
+  flex: 2;
+}
+
+.notificationsSection {
+  flex: 0;
+  transition: flex 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  border-radius: 0 2rem 2rem 0;
+}
+
+.partial {
+  flex: 0.001; /* Adjust to control how much of the panel is visible */
+  background-color: #f7f7f7;
+  padding: 2rem;
+  align-items: center;
+}
+
+.visible {
+  flex: 1;
+}
+
+.toggleBtn {
+  background-color: #f7f7f7;
+  color: #66bf7b;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: -1rem; /* Position the button outside the panel */
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.unreadBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
