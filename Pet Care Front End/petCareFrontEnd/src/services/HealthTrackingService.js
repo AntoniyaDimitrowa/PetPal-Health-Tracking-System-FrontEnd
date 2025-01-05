@@ -6,7 +6,7 @@ import TokenManager from "./TokenManager.jsx";
 const getCurrentMonthYear = () => {
     const now = new Date();
     return {
-        month: now.toLocaleString('default', { month: 'long' }), // Full month name
+        month: now.getMonth() + 1,
         year: now.getFullYear(),
     };
 };
@@ -21,7 +21,7 @@ export const getHealthDataForCurrentMonth = async (petId) => {
         const { month, year } = getCurrentMonthYear();
 
         // Fetch health data for the pet for the current month
-        const response = await axios.get(`${baseURL}/health/pets/${petId}/records`, {
+        const response = await axios.get(`${baseURL}/health/pets/${petId}/statistics`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },

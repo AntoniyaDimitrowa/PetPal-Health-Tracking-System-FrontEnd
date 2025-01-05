@@ -62,7 +62,7 @@ function SignupForm() {
                 />
             </div>
             <div className={styles.inputGroup}>
-                <label htmlFor="address" className={styles.label}>Address:*</label>
+                <label htmlFor="address" className={styles.label}>Address(City, Country):* </label>
                 <input
                     type="text"
                     id="address"

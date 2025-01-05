@@ -8,7 +8,7 @@ const StatisticsPanel = ({ pets }) => {
   return (
     <div className={styles.wrapper}>
       {pets.map((pet) => (
-        <PetStatistics pet={pet} />
+        <PetStatistics pet={pet} key={pet.id}/>
       ))}
     </div>
   );
