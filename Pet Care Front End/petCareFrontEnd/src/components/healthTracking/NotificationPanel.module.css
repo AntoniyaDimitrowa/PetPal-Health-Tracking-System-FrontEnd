@@ -29,3 +29,28 @@
   border-radius: 3px;
   cursor: pointer;
 }
+
+.filterButtons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filterButtons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filterButtons button.active {
+  background-color: green;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}

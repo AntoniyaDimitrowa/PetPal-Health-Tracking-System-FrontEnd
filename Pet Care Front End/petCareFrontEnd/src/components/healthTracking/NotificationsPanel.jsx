@@ -1,28 +1,91 @@
-import React from 'react';
-import styles from './NotificationPanel.module.css';
+import React, { useState, useEffect } from "react";
+import styles from "./NotificationPanel.module.css";
+import { fetchNotifications, markNotificationAsRead } from "../../services/NotificationService";
 
 const NotificationPanel = () => {
-  const notifications = [
-    { pet: 'Buddy', message: "Buddy's health is on track!", date: '30/12/24', id: 1 },
-    { pet: 'Lili', message: "Lili is not eating enough!", date: '30/12/24', id: 2 },
-  ];
+  const [notifications, setNotifications] = useState([]);
+  const [filter, setFilter] = useState("unread");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const PAGE_SIZE = 5;
+
+  useEffect(() => {
+    loadNotifications();
+  }, [filter, currentPage]);
+
+  const loadNotifications = async () => {
+    try {
+      const { notifications, totalPages } = await fetchNotifications(filter, currentPage, PAGE_SIZE);
+      setNotifications(notifications);
+      setTotalPages(totalPages);
+    } catch (error) {
+      console.error("Failed to load notifications:", error);
+    }
+  };
+
+  const handleMarkAsRead = async (notificationId) => {
+    try {
+      const success = await markNotificationAsRead(notificationId);
+      if (success) {
+        loadNotifications();
+      }
+    } catch (error) {
+      console.error("Failed to mark notification as read:", error);
+    }
+  };
+
+  const handlePreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const handleNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <div className={styles.notificationsContainer}>
-      <h2>Read / Unread</h2>
+      <div className={styles.filterButtons}>
+        <button
+          className={filter === "unread" ? styles.active : ""}
+          onClick={() => {
+            setFilter("unread");
+            setCurrentPage(1);
+          }}
+        >
+          Unread
+        </button>
+        <button
+          className={filter === "read" ? styles.active : ""}
+          onClick={() => {
+            setFilter("read");
+            setCurrentPage(1);
+          }}
+        >
+          Read
+        </button>
+      </div>
+
       <ul>
         {notifications.map((notification) => (
           <li key={notification.id}>
-            <h3>{notification.pet}</h3>
+            <h3>{notification.petName}</h3>
             <p>{notification.message}</p>
-            <small>{notification.date}</small>
-            <div className={styles.notificationActions}>
-              <button>Mark as read</button>
-              {notification.message.includes('not eating') && <button>See more</button>}
-            </div>
+            <small>{new Date(notification.date).toLocaleDateString()}</small>
+            {!notification.isRead && (
+              <button onClick={() => handleMarkAsRead(notification.id)}>Mark as read</button>
+            )}
           </li>
         ))}
       </ul>
+
+      {filter === "read" && (
+        <div className={styles.pagination}>
+          <button disabled={currentPage === 1} onClick={handlePreviousPage}>
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button disabled={currentPage === totalPages} onClick={handleNextPage}>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
