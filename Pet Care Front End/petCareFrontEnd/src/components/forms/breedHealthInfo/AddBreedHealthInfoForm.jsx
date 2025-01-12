@@ -7,12 +7,15 @@ import SubmitButton from '../SubmitButton';
 import { validateBreedHealthInfo } from '../../../validations/BreedHealthInfoValidation';
 import customStyles from '../CustomStyles';
 import { AuthContext } from '../../../context/AuthContext';
+import TokenManager from '../../../services/TokenManager';
 
 const AddBreedHealthInfoForm = ({ onSuccess }) => {
     const { claims } = useContext(AuthContext);
+    const userId = TokenManager.getClaims()?.userId;
     
     const [healthInfo, setHealthInfo] = useState({
         breedId: '',
+        userId: userId,
         ageRangeStart: '',
         ageRangeEnd: '',
         normalFoodIntake: '',

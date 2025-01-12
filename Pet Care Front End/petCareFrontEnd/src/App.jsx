@@ -18,6 +18,7 @@ import BreedManagement from './pages/BreedManagement';
 import MoodManagement from './pages/MoodManagement';
 import AddBreedHealthInfoPage from './pages/AddBreedHealthInfo';
 import HealthTrackingPage from './pages/HealthTrackingPage';
+import FutureFeaturePage from './pages/FutureFeaturePage';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path='/moods' element={<MoodManagement />} />
             <Route path='/addBreedHealthInfo' element={<AddBreedHealthInfoPage />} />
             <Route path='/healthTracking' element={<HealthTrackingPage />} />
+            <Route path='/futureFeature' element={<FutureFeaturePage />} />
           </Routes>
           <Footer />
         </Router>

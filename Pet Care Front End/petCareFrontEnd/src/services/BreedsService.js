@@ -57,11 +57,6 @@ export const createBreedHealthInfo = async (breedHealthInfoData) => {
         if (!token) {
             throw new Error("Token is missing");
         }
-
-        console.log("Request Headers:", {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        });
         const response = await axios.post(`${baseURL}/health/breeds/${breedHealthInfoData.breedId}/health`, breedHealthInfoData, {
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./NotificationPanel.module.css";
 import { fetchNotifications, markNotificationAsRead } from "../../services/NotificationService";
+import { connectWebSocket, disconnectWebSocket } from "../../services/WebSocketService";
+import TokenManager from "../../services/TokenManager";
 
 const NotificationPanel = () => {
   const [notifications, setNotifications] = useState([]);
@@ -10,8 +12,35 @@ const NotificationPanel = () => {
   const PAGE_SIZE = 5;
 
   useEffect(() => {
+    const loadNotifications = async () => {
+      try {
+        const { notifications, totalPages } = await fetchNotifications(filter, currentPage, PAGE_SIZE);
+        setNotifications(notifications);
+        setTotalPages(totalPages);
+      } catch (error) {
+        console.error("Failed to load notifications:", error);
+      }
+    };
+
     loadNotifications();
   }, [filter, currentPage]);
+
+  useEffect(() => {
+    const userId = TokenManager.getClaims()?.userId;
+
+    if (!userId) return;
+
+    const client = connectWebSocket(userId, () => {
+      console.log("New notification received, refreshing...");
+      loadNotifications();
+    }, () => {
+      loadNotifications();
+    });
+
+    return () => {
+      disconnectWebSocket(client);
+    };
+  }, []);
 
   const loadNotifications = async () => {
     try {
@@ -25,10 +54,7 @@ const NotificationPanel = () => {
 
   const handleMarkAsRead = async (notificationId) => {
     try {
-      const success = await markNotificationAsRead(notificationId);
-      if (success) {
-        loadNotifications();
-      }
+      await markNotificationAsRead(notificationId);
     } catch (error) {
       console.error("Failed to mark notification as read:", error);
     }

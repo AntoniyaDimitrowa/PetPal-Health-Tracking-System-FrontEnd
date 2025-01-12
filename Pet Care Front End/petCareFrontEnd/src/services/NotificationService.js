@@ -9,7 +9,9 @@ export const fetchNotifications = async (filter, page, pageSize) => {
       throw new Error("Token is missing");
     }
 
-    const response = await axios.get(`${baseURL}/notifications`, {
+    const userId = TokenManager.getClaims()?.userId;
+
+    const response = await axios.get(`${baseURL}/notifications/users/${userId}`, {
       params: {
         status: filter,
         page,
@@ -62,6 +64,29 @@ export const markNotificationAsRead = async (notificationId) => {
     }
   } catch (error) {
     console.error("Error marking notification as read:", error);
+    throw error;
+  }
+};
+
+// Fetch the count of unread notifications for a user
+export const fetchUnreadCount = async (userId) => {
+  try {
+    const token = TokenManager.getAccessToken();
+    if (!token) throw new Error("Token is missing");
+
+    const response = await axios.get(`${baseURL}/notifications/unread-count`, {
+      params: { userId },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response?.data !== undefined) {
+      console.log("Unread count fetched successfully:", response.data);
+      return response.data; // Assuming response.data contains the count
+    } else {
+      throw new Error("No response data found.");
+    }
+  } catch (error) {
+    console.error("Error fetching unread count:", error);
     throw error;
   }
 };
