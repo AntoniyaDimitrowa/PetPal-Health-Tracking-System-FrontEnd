@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Picker from '@emoji-mart/react';
 import formStyles from '../../forms/Form.module.css';
-import {createMood} from '../../../services/MoodService';
+import { createMood } from '../../../services/MoodService';
+import { validateAddMoodForm } from '../../../validations/AddMoodFormValidation';
+import ErrorMessage from '../../messages/ErrorMessge';
 
 const AddMoodForm = ({ onMoodAdded }) => {
     const [mood, setMood] = useState({
@@ -10,9 +12,24 @@ const AddMoodForm = ({ onMoodAdded }) => {
     });
     const [showPicker, setShowPicker] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const formRef = useRef(null); // Ref for scrolling to the top of the form
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const validationErrors = validateAddMoodForm(mood);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+
+            // Scroll to the top of the form to display errors
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+            return;
+        }
+
+        setErrors({});
         setLoading(true);
 
         try {
@@ -34,8 +51,9 @@ const AddMoodForm = ({ onMoodAdded }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={formStyles.box}>
+        <form onSubmit={handleSubmit} className={formStyles.box} ref={formRef}>
             <h2 className={formStyles.title}>Add New Mood</h2>
+            <ErrorMessage errors={errors} />
 
             <div className={formStyles.inputGroup}>
                 <label className={formStyles.label}>Name:*</label>
@@ -44,7 +62,6 @@ const AddMoodForm = ({ onMoodAdded }) => {
                     className={formStyles.inputField}
                     value={mood.name}
                     onChange={(e) => setMood({ ...mood, name: e.target.value })}
-                    required
                 />
             </div>
 

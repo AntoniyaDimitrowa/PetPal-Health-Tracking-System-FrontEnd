@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import formStyles from '../../forms/Form.module.css';
-import { createBreed } from '../../../services/BreedsService'; 
-import MoodSelector from '../healthRecord/MoodSelector'; 
+import { createBreed } from '../../../services/BreedsService';
+import MoodSelector from '../healthRecord/MoodSelector';
+import { validateAddBreedForm } from '../../../validations/AddBreedFormValidation';
+import ErrorMessage from '../../messages/ErrorMessge';
 
 const AddBreedForm = ({ onBreedAdded }) => {
     const [breed, setBreed] = useState({
@@ -12,9 +14,24 @@ const AddBreedForm = ({ onBreedAdded }) => {
         commonHealthProblems: '',
     });
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const formRef = useRef(null); // Ref for smooth scrolling
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const validationErrors = validateAddBreedForm(breed);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+
+            // Scroll to the top of the form to display errors
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+            return;
+        }
+
+        setErrors({});
         setLoading(true);
 
         const breedData = {
@@ -42,8 +59,10 @@ const AddBreedForm = ({ onBreedAdded }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={formStyles.box}>
+        <form onSubmit={handleSubmit} className={formStyles.box} ref={formRef}>
             <h2 className={formStyles.title}>Add New Breed</h2>
+            <ErrorMessage errors={errors} />
+
             <div className={formStyles.inputGroup}>
                 <label className={formStyles.label}>Name:*</label>
                 <input
@@ -51,7 +70,6 @@ const AddBreedForm = ({ onBreedAdded }) => {
                     className={formStyles.inputField}
                     value={breed.name}
                     onChange={(e) => setBreed({ ...breed, name: e.target.value })}
-                    required
                 />
             </div>
 
@@ -61,7 +79,6 @@ const AddBreedForm = ({ onBreedAdded }) => {
                     className={formStyles.inputField}
                     value={breed.description}
                     onChange={(e) => setBreed({ ...breed, description: e.target.value })}
-                    required
                 />
             </div>
 
@@ -79,8 +96,8 @@ const AddBreedForm = ({ onBreedAdded }) => {
                     onChange={(e) => setBreed({ ...breed, minimumExercisePerDay: parseFloat(e.target.value) })}
                     min="0"
                     step="0.1"
-                    required
                 />
+                
             </div>
 
             <div className={formStyles.inputGroup}>

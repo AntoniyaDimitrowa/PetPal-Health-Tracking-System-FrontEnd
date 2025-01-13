@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import formStyles from '../Form.module.css';
 import PetInputFields from './PetInputFields';
 import SubmitButton from '../SubmitButton';
@@ -12,7 +12,7 @@ import TokenManager from '../../../services/TokenManager';
 
 const AddPetForm = ({ onSuccess }) => {
     const userId = TokenManager.getClaims()?.userId;
-    
+
     const [petData, setPetData] = useState({
         name: '',
         breedId: '',
@@ -20,8 +20,8 @@ const AddPetForm = ({ onSuccess }) => {
         weight: '',
         gender: '',
         vaccinations: {},
-        image: null,         // Image preview URL
-        imageFile: null,     // Image file object
+        image: null,
+        imageFile: null,
         userId: userId || ''
     });
 
@@ -29,6 +29,8 @@ const AddPetForm = ({ onSuccess }) => {
     const [vaccinationOptions, setVaccinationOptions] = useState([]);
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
     const [errors, setErrors] = useState({});
+
+    const formRef = useRef(null); // Ref for scrolling to the top of the form
 
     useEffect(() => {
         const fetchBreeds = async () => {
@@ -67,8 +69,8 @@ const AddPetForm = ({ onSuccess }) => {
     const handleImageChange = (file) => {
         setPetData((prevData) => ({
             ...prevData,
-            imageFile: file,                      // Store the File object
-            image: URL.createObjectURL(file),     // Set preview URL
+            imageFile: file,
+            image: URL.createObjectURL(file),
         }));
     };
 
@@ -83,7 +85,7 @@ const AddPetForm = ({ onSuccess }) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onloadend = () => resolve(reader.result.split(',')[1]); // Remove data:image prefix
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
             reader.onerror = (error) => reject(error);
         });
     };
@@ -106,6 +108,11 @@ const AddPetForm = ({ onSuccess }) => {
         const { errors } = validatePetForm(petData, vaccinationOptions);
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
+
+            // Scroll to the top of the form to display errors
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
             return;
         }
 
@@ -131,15 +138,14 @@ const AddPetForm = ({ onSuccess }) => {
         }
     };
 
-    const dynamicPadding = Object.keys(errors).length > 0 ? '20rem' : '15rem';
-    
+    const dynamicPadding = Object.keys(errors).length > 0 ? '22rem' : '17rem';
+
     return (
-        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>            
-        <div className={formStyles.box}>
+        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>
+            <div className={formStyles.box} ref={formRef}>
                 <h1 className={formStyles.title}>Add Pet</h1>
                 <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>
-                    {/* Shared Input Fields */}
                     <PetInputFields
                         petData={petData}
                         breedOptions={breedOptions}
@@ -153,7 +159,6 @@ const AddPetForm = ({ onSuccess }) => {
                         petData={petData}
                         handleChange={handleChange}
                     />
-                    {/* Submit Button */}
                     <SubmitButton type="submit">Add Pet</SubmitButton>
                 </form>
             </div>

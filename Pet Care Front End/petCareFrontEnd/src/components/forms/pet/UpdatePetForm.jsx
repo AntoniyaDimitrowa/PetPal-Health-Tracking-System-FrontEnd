@@ -7,10 +7,10 @@ import { updatePet } from '../../../services/PetService'; // Uncomment the servi
 import { usePet } from '../../../context/PetContext';
 import ErrorMessage from '../../messages/ErrorMessge';
 import SuccessMessage from '../../messages/SuccessMessage';
+import { validateUpdatePetForm } from '../../../validations/PetValidation';
 
 const UpdatePetForm = () => {
     const { pet, setPet } = usePet(); // Access the selected pet from context
-    console.log(pet);
     const [petData, setPetData] = useState({
         id: '',
         name: '',
@@ -78,6 +78,14 @@ const UpdatePetForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Form validation
+        const validationErrors = validateUpdatePetForm(petData);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            scrollToFirstError(validationErrors);
+            return;
+        }
+
         // Prepare the form data for submission
         const updatedPetData = { ...petData };
 
@@ -102,7 +110,19 @@ const UpdatePetForm = () => {
             setErrors({});
         } catch (error) {
             console.error('Error updating pet:', error);
-            setErrors({ submit: 'Failed to update pet. Please try again later. Error updating pet:'+ error });
+            setErrors({ submit: 'Failed to update pet. Please try again later. Error updating pet:' + error });
+        }
+    };
+
+    // Scroll to the first error
+    const scrollToFirstError = (validationErrors) => {
+        const errorKeys = Object.keys(validationErrors);
+        if (errorKeys.length > 0) {
+            const firstErrorKey = errorKeys[0];
+            const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
+            if (errorElement) {
+                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
     };
 
@@ -130,7 +150,7 @@ const UpdatePetForm = () => {
 
     return (
         <div className={formStyles.pageContainer}>
-            <SuccessMessage message={successMessage}/>
+            <SuccessMessage message={successMessage} />
             <div className={formStyles.box}>    
                 <h1 className={formStyles.title}>Update Pet</h1>
                 <ErrorMessage errors={errors} />

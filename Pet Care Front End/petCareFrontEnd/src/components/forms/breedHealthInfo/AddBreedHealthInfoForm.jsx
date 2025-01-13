@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Select from 'react-select';
 import formStyles from '../Form.module.css';
 import { createBreedHealthInfo, getBreeds } from '../../../services/BreedsService';
@@ -26,6 +26,7 @@ const AddBreedHealthInfoForm = ({ onSuccess }) => {
     const [errors, setErrors] = useState({});
     const [breedOptions, setBreedOptions] = useState([]);
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(true);
+    const formRef = useRef(null); // Ref for scrolling to the top of the form
 
     useEffect(() => {
         const fetchBreeds = async () => {
@@ -60,6 +61,10 @@ const AddBreedHealthInfoForm = ({ onSuccess }) => {
 
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+            
             return;
         }
 
@@ -87,7 +92,7 @@ const AddBreedHealthInfoForm = ({ onSuccess }) => {
         <>
         {claims?.roles.includes("Veterinarian") ? (
             <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>
-            <div className={formStyles.box}>
+            <div className={formStyles.box} ref={formRef}>
                 <h1 className={formStyles.title}>Add Breed Health Info</h1>
                 <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>

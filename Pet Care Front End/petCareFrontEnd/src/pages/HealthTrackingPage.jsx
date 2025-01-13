@@ -8,11 +8,44 @@ import TokenManager from "../services/TokenManager";
 import { getAccount } from "../services/UserAccountService";
 import { connectWebSocket, disconnectWebSocket } from "../services/WebSocketService";
 import { fetchUnreadCount } from "../services/NotificationService";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const HealthTracking = () => {
   const [isNotificationsVisible, setNotificationsVisible] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [account, setAccount] = useState(null);
+  const navigate = useNavigate();
+  const { claims } = useContext(AuthContext); // Getting claims from the AuthContext
+
+  useEffect(() => {
+      const checkUserAccess = () => {
+          const token = TokenManager.getAccessToken();
+
+          // 1. If no token, redirect to login
+          if (!token) {
+              navigate('/login');
+              return;
+          }
+
+          // 2. Decode the token and check for expiration
+          const decodedToken = jwtDecode(token);
+          const currentTime = Date.now() / 1000;
+          if (decodedToken.exp < currentTime) {
+              TokenManager.clear();
+              navigate('/login'); // Redirect if token is expired
+              return;
+          }
+
+          // 3. If user doesn't have 'owner' role, redirect to /accessDenied
+          if (claims && !claims.roles.includes("Owner")) {
+              navigate('/accessDenied');
+              return;
+          }
+      };
+
+      checkUserAccess();
+  }, [navigate, claims]);
 
   const toggleNotifications = () => {
     setNotificationsVisible((prev) => !prev);
