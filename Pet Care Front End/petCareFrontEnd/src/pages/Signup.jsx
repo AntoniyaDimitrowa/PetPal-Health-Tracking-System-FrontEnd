@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Signup() {
   return (
-    <div className={styles.pageContainer}>
+    <div className={styles.pageContainer} style={{ padding: `5rem 0` }}>
       <div className={styles.box}>
         <h1 className={styles.title}>Signup</h1>
         <SignupForm />

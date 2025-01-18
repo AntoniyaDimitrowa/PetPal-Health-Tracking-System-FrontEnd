@@ -29,7 +29,7 @@ function PetVaccines() {
           }
 
           // 3. If user doesn't have 'owner' role, redirect to /accessDenied
-          if (claims && !claims.roles.includes("Admin")) {
+          if (claims && !claims.roles.includes("Owner")) {
               navigate('/accessDenied');
               return;
           }

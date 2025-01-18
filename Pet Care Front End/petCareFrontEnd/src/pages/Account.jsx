@@ -71,11 +71,12 @@ const Account = () => {
                 <PetCard key={pet.id} pet={pet} />
               ))}
               <Link to="/addPet">
-                <button className={styles.addPetButton}>Add Pet</button>
+                <button className={styles.addPetButton} data-cy="addPetBTN">Add Pet</button>
               </Link>
             </section>
           </>
-        ) : (
+        ) : claims.roles.includes("Admin") ? 
+        (<></>) : (
           <>
             {account.breedHealthInfos?.length > 0 ? (
               <h1 className={typographyStyles.title}>The breed health information you added</h1>

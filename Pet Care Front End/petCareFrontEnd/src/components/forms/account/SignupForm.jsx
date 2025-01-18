@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from '../Form.module.css'; // Adjust the path as needed
 import SubmitButton from '../SubmitButton'; // Adjust the path as necessary
 import AuthenticationService from '../../../services/AuthenticationService.js';
+import { validateSignupForm } from '../../../validations/UserValidation.js';
+import ErrorMessage from '../../messages/ErrorMessge.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
     const [inputValues, setInputValues] = useState({
@@ -11,7 +14,10 @@ function SignupForm() {
         password: "",
         repeatPassword: "",
     });
-
+    const [errors, setErrors] = useState({});
+    const formRef = useRef(null); // Ref for scrolling to the top of the form
+    const navigate = useNavigate(); 
+    
     const handleChange = (e) => {
         const { id, value } = e.target;
         setInputValues((prevValues) => ({
@@ -25,14 +31,23 @@ function SignupForm() {
 
         const { name, address, email, password, repeatPassword } = inputValues;
 
-        if (password !== repeatPassword) {
-            alert("Passwords don't match!");
+        const detectedErrors = validateSignupForm(inputValues);
+
+        if (Object.keys(detectedErrors).length > 0) {
+            setErrors(detectedErrors);
+
+            // Scroll to the top of the form to display errors
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
             return;
         }
 
+        setErrors({});
+
         AuthenticationService.register(name, email, address, password)
             .then(() => {
-                alert("User registered successfully!");
+                navigate("/account")
             })
             .catch((e) => {
                 alert(e);
@@ -40,7 +55,8 @@ function SignupForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
+            <ErrorMessage errors={errors} />
             <div className={styles.inputGroup}>
                 <label htmlFor="name" className={styles.label}>Full Name:*</label>
                 <input

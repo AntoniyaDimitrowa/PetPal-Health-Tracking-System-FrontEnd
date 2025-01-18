@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAccount, updateAccount } from '../../../services/UserAccountService';  
 import formStyles from '../Form.module.css';
 import ImageUpload from '../ImageUpload';
 import SubmitButton from '../SubmitButton';
+import ErrorMessage from '../../messages/ErrorMessge';
+import { validateUpdateAccountForm } from '../../../validations/UserValidation';
 
 const UpdateAccount = ({ userId, onSuccess }) => {
     const [accountData, setAccountData] = useState({
@@ -17,8 +19,9 @@ const UpdateAccount = ({ userId, onSuccess }) => {
     });
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState({});
     const [isChangePassword, setIsChangePassword] = useState(false); // State for tracking the checkbox
+    const formRef = useRef(null); 
 
     useEffect(() => {
         const fetchAccount = async () => {
@@ -68,36 +71,30 @@ const UpdateAccount = ({ userId, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // If password change is requested, validate that passwords match
-        if (isChangePassword) {
-            if (accountData.password !== accountData.confirmPassword) {
-                setError("Passwords do not match");
-                return;
+    
+        const validationErrors = validateUpdateAccountForm(accountData, isChangePassword);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
             }
-            if (!accountData.password || !accountData.confirmPassword || !accountData.oldPassword) {
-                setError("Please fill in all password fields");
-                return;
-            }
+            return;
         }
 
+        const withPassword = isChangePassword;
+    
         const payload = {
             name: accountData.name,
             email: accountData.email,
             address: accountData.address,
+            ...(withPassword
+                ? {
+                      oldPassword: accountData.oldPassword,
+                      newPassword: accountData.password,
+                  }
+                : {}),
         };
-
-        // Include the old password for validation
-        if (isChangePassword && accountData.oldPassword) {
-            payload.oldPassword = accountData.oldPassword;
-        }
-
-        // Only include the new password if the change password checkbox is checked
-        if (isChangePassword && accountData.password) {
-            payload.password = accountData.password;
-        }
-
-        // Convert to base64 if there is an image file
+    
         if (accountData.imageFile) {
             try {
                 const base64Image = await convertFileToBase64(accountData.imageFile);
@@ -110,23 +107,25 @@ const UpdateAccount = ({ userId, onSuccess }) => {
         }
 
         try {
-            await updateAccount(userId, payload);
+            await updateAccount(userId, payload, withPassword);
             if (onSuccess) onSuccess();
         } catch (error) {
-            console.error("Error updating account:", error);
-            setError("Failed to update account. Please try again later.");
+            const message = error.response?.data?.message || "Failed to update account.";
+            setError(message);
         }
     };
-
+    
     if (loading) {
         return <p>Loading...</p>;
     }
 
+    const dynamicPadding = Object.keys(errors).length > 0 ? '5rem' : '3rem';
+
     return (
-        <div className={formStyles.pageContainer}>
-            <div className={formStyles.box}>
+        <div className={formStyles.pageContainer} style={{ padding: `${dynamicPadding} 0` }}>
+            <div className={formStyles.box} ref={formRef}>
                 <h1 className={formStyles.title}>Update Account</h1>
-                {error && <p className={formStyles.error}>{error}</p>}
+                <ErrorMessage errors={errors} />
                 <form onSubmit={handleSubmit}>
                     <div className={formStyles.photoPlusInputs}>
                         <ImageUpload data={accountData} handleImageChange={handleImageChange} />

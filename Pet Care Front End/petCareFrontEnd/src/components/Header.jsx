@@ -75,7 +75,7 @@ function Header() {
                     to="/futureFeature"
                     className={({ isActive }) => (isActive ? styles.active : undefined)}
                   >
-                    Socialize <span>({unreadCount})</span>
+                    Socialize <span>(0)</span>
                   </NavLink>
               </li>
               {claims.roles.includes("Owner") && (
@@ -92,6 +92,7 @@ function Header() {
                 <NavLink
                   to="/account"
                   className={({ isActive }) => (isActive ? styles.active : undefined)}
+                  data-cy="accountBTN"
                 >
                   Account
                 </NavLink>
@@ -112,7 +113,7 @@ function Header() {
       ) : (
         <div className={styles.authButtons}>
           <Link to="/login">
-            <button className={styles.btnSecondary}>Log In</button>
+            <button className={styles.btnSecondary} data-cy="loginBTN">Log In</button>
           </Link>
           <Link to="/signup">
             <button className={styles.btnPrimary}>Sign Up</button>

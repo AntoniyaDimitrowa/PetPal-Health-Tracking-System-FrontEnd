@@ -20,22 +20,20 @@ export const getAccount = async (id) => {
   };
   
 
-  export const updateAccount = async (id, updatedData) => {
-    try {
-        const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
-        if (!token) {
-            throw new Error("Token is missing");
-        }
-
-        const response = await axios.put(`${baseURL}/users/${id}`, updatedData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error updating account:", error);
-        return null;
+  export const updateAccount = async (id, updatedData, withPassword = false) => {
+    const token = TokenManager.getAccessToken();
+    if (!token) {
+        throw new Error("Token is missing");
     }
+
+    const endpoint = withPassword ? `${baseURL}/users/${id}/secure` : `${baseURL}/users/${id}/basic`;
+
+    const response = await axios.put(endpoint, updatedData, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    return response.data;
 };
