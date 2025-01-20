@@ -13,7 +13,21 @@ const TutorialSection = () => {
         </p>
       </div>
       <div className={styles.video}>
-        <img src="/assets/video-placeholder.jpg" alt="video" />
+        <video
+          className={styles.tutorialVideo}
+          controls
+          src="/assets/TutorialPetPal - Made with Clipchamp.mp4"
+          poster="/assets/video-poster.png"
+          onError={(e) => {
+            e.target.style.display = "none"; // Hide the video
+            const fallbackImage = document.createElement("img");
+            fallbackImage.src = "/assets/video-placeholder.jpg";
+            fallbackImage.alt = "Video not available";
+            e.target.parentElement.appendChild(fallbackImage); // Add fallback image
+          }}
+        >
+          Your browser does not support the video tag.
+        </video>
       </div>
     </section>
   );

@@ -70,3 +70,29 @@ export const getHealthDataForCurrentMonth = async (petId) => {
         throw error;
     }
 };
+
+export const getHealthRecordsByPetId = async (petId) => {
+    try {
+        const token = TokenManager.getAccessToken(); // Retrieve the raw JWT
+        if (!token) {
+            throw new Error("Token is missing");
+        }
+
+        // Fetch health data for the pet for the current month
+        const response = await axios.get(`${baseURL}/health/pets/${petId}/records`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (response) {
+            console.log(response.data);
+            return response.data;
+        } else {
+            throw new Error("No health drecords found for the specified pet.");
+        }
+    } catch (error) {
+        console.error("Error fetching health records for pet:", error);
+        throw error;
+    }
+};

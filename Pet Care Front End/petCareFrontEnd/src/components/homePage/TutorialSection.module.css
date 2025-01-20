@@ -1,29 +1,74 @@
 /* Tutorial Section */
 .tutorialSection {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* Stack on smaller screens */
+    align-items: center;
     padding: 2rem 5rem;
     background-color: #C3E5CC;
-}
-
-.video {
-    margin-left: 1rem;
-}
-
-.video img {
-    max-height: 25rem;
-}
-
-h2 {
-    font-size: 2.3rem;
-    margin-top: 0;
-    color: #204e2a;
+    gap: 2rem; /* Add spacing between elements */
 }
 
 .tutorialText {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding: 4rem 1rem;
+    justify-content: center;
+    align-items: center; /* Center text for smaller screens */
+    text-align: center; /* Ensure centered text alignment */
+    padding: 2rem;
+}
+
+.tutorialText h2 {
+    font-size: 2.5rem; /* Slightly larger font for emphasis */
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #204e2a;
+}
+
+.tutorialText p {
+    font-size: 1.2rem;
+    color: #204e2a;
+    line-height: 1.6;
+}
+
+.video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure video scales with its container */
+}
+
+.tutorialVideo {
+    max-height: 25rem; /* Limit height to avoid oversizing */
+    max-width: 100%; /* Keep the video responsive */
+    border-radius: 0.5rem; /* Add slight rounding for aesthetics */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.video img {
+    max-height: 25rem;
+    max-width: 100%;
+    border-radius: 0.5rem; /* Match video styling */
+    display: block;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Consistent shadow with video */
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    .tutorialSection {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 1rem; /* Adjust spacing */
+    }
+
+    .tutorialText {
+        align-items: flex-start;
+        text-align: left;
+        max-width: 50%;
+    }
+
+    .video {
+        max-width: 50%;
+        margin-left: 1rem;
+    }
 }

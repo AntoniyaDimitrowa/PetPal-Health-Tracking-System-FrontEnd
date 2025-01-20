@@ -101,7 +101,7 @@ const UpdateAccount = ({ userId, onSuccess }) => {
                 payload.image = base64Image;
             } catch (error) {
                 console.error("Error converting image to base64:", error);
-                setError("Failed to process the image. Please try a different file.");
+                errors.image = "Failed to process the image. Please try a different file.";
                 return;
             }
         }
@@ -111,7 +111,8 @@ const UpdateAccount = ({ userId, onSuccess }) => {
             if (onSuccess) onSuccess();
         } catch (error) {
             const message = error.response?.data?.message || "Failed to update account.";
-            setError(message);
+            errors.wholeUpdate = message;
+            console.log(message);
         }
     };
     

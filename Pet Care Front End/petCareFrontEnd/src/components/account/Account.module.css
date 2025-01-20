@@ -53,4 +53,53 @@
     flex-direction: column;
     gap: 1rem;
   }
+
+  .dailyUpdateIndicator {
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+  }
   
+  .dailyUpdateIndicator::after {
+    content: "✓";
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  
+  .dailyUpdateIndicator:hover::before {
+    content: "Daily update completed"; /* The message you want to show */
+    position: absolute;
+    top: -30px; /* Adjust to position the tooltip above the checkmark */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #07621d;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .dailyUpdateIndicator:hover::after {
+    content: "✓";
+    border-style: solid;
+    border-width: 6px;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+    position: absolute;
+    top: -12px; /* Adjust to match the tooltip's position */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
